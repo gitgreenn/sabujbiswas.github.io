@@ -3,23 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
+    <title>Sabuj Biswas | Developer Portfolio</title>
+    <meta name="description" content="Personal portfolio of Sabuj Biswas - Web Developer, programmer and tech enthusiast.">
+    <meta name="theme-color" content="#0a0f1d">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sabuj Biswas | Developer Portfolio">
+    <meta property="og:description" content="Personal portfolio of Sabuj Biswas - Web Developer, programmer and tech enthusiast.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Background glow shapes -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
 
-    <header>
-        <h1>Welcome to My Website!</h1>
-        <p>My first Cloudflare Pages hosting experiment.</p>
+    <!-- Navigation -->
+    <header class="navbar-wrapper">
+        <nav class="navbar">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>Sabuj<span class="logo-dot">.</span>dev<span class="logo-bracket">/&gt;</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li>
+                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="nav-btn-icon" title="GitHub Profile">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
     </header>
 
     <main>
-        <h2>Hello, Internet!</h2>
-        <p>This website is built using HTML, CSS and JavaScript.</p>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-badge">
+                    <span class="badge-pulse"></span> Available for projects & opportunities
+                </div>
+                <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text">Sabuj Biswas</span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    I build <span id="typing-text" class="typing-text">modern web experiences</span>
+                </h2>
+                <p class="hero-description">
+                    Passionate about crafting fast, accessible, and responsive web applications. Constantly learning modern technologies and turning ideas into clean, functional code.
+                </p>
 
-        <button onclick="showMessage()">Click Me</button>
-        <p id="message"></p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fa-solid fa-laptop-code"></i> View Projects
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fa-solid fa-paper-plane"></i> Get In Touch
+                    </a>
+                </div>
+
+                <div class="hero-socials">
+                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub" aria-label="GitHub Profile">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn" aria-label="LinkedIn Profile">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:31.sabuj.biswas@gmail.com" class="social-link" title="Email Me" aria-label="Email Sabuj Biswas">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Overview</span>
+                    <h2 class="section-title">About Me</h2>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p class="about-lead">
+                            Hello! I am a passionate developer with a strong curiosity for creating interactive, user-friendly digital solutions.
+                        </p>
+                        <p>
+                            I specialize in front-end development, responsive web design, and cloud deployments. I enjoy transforming concepts into clean code and continually improving my skill set with the latest web standards.
+                        </p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <i class="fa-solid fa-bolt highlight-icon"></i>
+                                <div>
+                                    <h4>Fast & Responsive</h4>
+                                    <p>Optimized for lightning-fast loads across phones, tablets, and desktops.</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fa-solid fa-code highlight-icon"></i>
+                                <div>
+                                    <h4>Clean Architecture</h4>
+                                    <p>Writing organized, maintainable HTML, modern CSS, and modular JavaScript.</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fa-solid fa-cloud-arrow-up highlight-icon"></i>
+                                <div>
+                                    <h4>Continuous Deployment</h4>
+                                    <p>Automated Git CI/CD workflows hosted globally on Cloudflare edge network.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="code-editor-mockup">
+                            <div class="editor-header">
+                                <span class="dot dot-red"></span>
+                                <span class="dot dot-yellow"></span>
+                                <span class="dot dot-green"></span>
+                                <span class="editor-filename">developer.json</span>
+                            </div>
+                            <pre class="editor-body"><code>{
+  <span class="key">"name"</span>: <span class="val">"Sabuj Biswas"</span>,
+  <span class="key">"role"</span>: <span class="val">"Web Developer"</span>,
+  <span class="key">"status"</span>: <span class="val">"Open to collaborate"</span>,
+  <span class="key">"location"</span>: <span class="val">"India"</span>,
+  <span class="key">"skills"</span>: [
+    <span class="val">"HTML5"</span>,
+    <span class="val">"CSS3 / Flexbox / Grid"</span>,
+    <span class="val">"JavaScript (ES6+)"</span>,
+    <span class="val">"Git & GitHub"</span>,
+    <span class="val">"Cloudflare Edge"</span>
+  ],
+  <span class="key">"passion"</span>: <span class="val">"Building great software"</span>
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Tech Stack</span>
+                    <h2 class="section-title">My Technical Skills</h2>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper html-color">
+                            <i class="fa-brands fa-html5"></i>
+                        </div>
+                        <h3>HTML5</h3>
+                        <p>Semantic markup, SEO optimization, and accessibility best practices.</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper css-color">
+                            <i class="fa-brands fa-css3-alt"></i>
+                        </div>
+                        <h3>CSS3 & Styling</h3>
+                        <p>Modern layouts with Flexbox & CSS Grid, responsive design, animations.</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper js-color">
+                            <i class="fa-brands fa-js"></i>
+                        </div>
+                        <h3>JavaScript</h3>
+                        <p>DOM manipulation, asynchronous fetching, modern ES6+ features.</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper git-color">
+                            <i class="fa-brands fa-git-alt"></i>
+                        </div>
+                        <h3>Git & GitHub</h3>
+                        <p>Version control, branching, collaboration, pull requests, and CI/CD.</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper cloud-color">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <h3>Cloudflare & Edge</h3>
+                        <p>Cloudflare Workers, Pages, edge CDN caching, and custom domain setup.</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon-wrapper responsive-color">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+                        <h3>Responsive Design</h3>
+                        <p>Pixel-perfect display across mobile devices, tablets, and high-DPI displays.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Portfolio</span>
+                    <h2 class="section-title">Featured Projects</h2>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <article class="project-card">
+                        <div class="project-preview">
+                            <div class="project-banner banner-1">
+                                <i class="fa-solid fa-globe banner-icon"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span class="tag">Cloudflare</span>
+                                <span class="tag">HTML5 / CSS3</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+                            <h3 class="project-title">Cloudflare Edge Developer Portfolio</h3>
+                            <p class="project-desc">
+                                A high-performance responsive personal website deployed directly to Cloudflare's global edge network with automated GitHub CI/CD integration.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://sabujbiswas-github-io.31-sabuj-biswas.workers.dev" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/gitgreenn/sabujbiswas.github.io" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                    <i class="fa-brands fa-github"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card">
+                        <div class="project-preview">
+                            <div class="project-banner banner-2">
+                                <i class="fa-solid fa-code banner-icon"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Async / Fetch</span>
+                                <span class="tag">UI / UX</span>
+                            </div>
+                            <h3 class="project-title">Dynamic Interactive Web App</h3>
+                            <p class="project-desc">
+                                Modern client-side application featuring dynamic components, state manipulation, interactive user feedback, and responsive layout.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                    <i class="fa-brands fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card">
+                        <div class="project-preview">
+                            <div class="project-banner banner-3">
+                                <i class="fa-solid fa-palette banner-icon"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span class="tag">CSS Grid</span>
+                                <span class="tag">Dark Mode</span>
+                                <span class="tag">Animations</span>
+                            </div>
+                            <h3 class="project-title">Modern Design Showcase</h3>
+                            <p class="project-desc">
+                                Collection of responsive layouts, custom CSS animations, glassmorphism cards, and fluid typography systems.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                    <i class="fa-brands fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Connect</span>
+                    <h2 class="section-title">Let's Build Something Together</h2>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-text">
+                        <h3>Interested in working together or have a question?</h3>
+                        <p>Feel free to reach out directly via email or connect with me on GitHub. I'm always open to discussing new projects, ideas, or opportunities.</p>
+                        <div class="contact-methods">
+                            <div class="contact-method-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <div>
+                                    <span class="method-label">Email</span>
+                                    <a href="mailto:31.sabuj.biswas@gmail.com" class="method-val">31.sabuj.biswas@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-method-item">
+                                <i class="fa-brands fa-github"></i>
+                                <div>
+                                    <span class="method-label">GitHub</span>
+                                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="method-val">github.com/gitgreenn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-actions">
+                        <a href="mailto:31.sabuj.biswas@gmail.com" class="btn btn-primary btn-large">
+                            <i class="fa-solid fa-paper-plane"></i> Send an Email
+                        </a>
+                        <button class="btn btn-secondary btn-large" id="copyEmailBtn">
+                            <i class="fa-regular fa-copy"></i> Copy Email Address
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; <span id="currentYear"></span> Sabuj Biswas. All rights reserved.</p>
+            <p class="footer-badge">
+                <i class="fa-solid fa-bolt"></i> Powered by Cloudflare & GitHub
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="status" aria-live="polite">Email address copied to clipboard!</div>
 
     <script src="js/script.js"></script>
 </body>
