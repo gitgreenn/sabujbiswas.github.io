@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeMobileNav();
             }
         });
+
+        // Close when window is resized past mobile breakpoint
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                closeMobileNav();
+            }
+        });
     }
 
     // 2. Dynamic Typing Effect (Smooth start without initial text snapping)
@@ -71,7 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentPhrase = phrases[phraseIndex];
 
             if (isDeleting) {
-                typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                const text = currentPhrase.substring(0, charIndex - 1);
+                typingElement.textContent = text || '\u00A0';
                 charIndex--;
                 typingSpeed = 45;
             } else {
