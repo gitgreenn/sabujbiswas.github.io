@@ -1,370 +1,692 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabuj Biswas | Developer Portfolio</title>
-    <meta name="description" content="Personal portfolio of Sabuj Biswas - Web Developer, programmer and tech enthusiast.">
-    <meta name="theme-color" content="#0a0f1d">
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
-    <!-- Open Graph / Meta -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Sabuj Biswas | Developer Portfolio">
-    <meta property="og:description" content="Personal portfolio of Sabuj Biswas - Web Developer, programmer and tech enthusiast.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERSPACE — Sabuj Biswas | Cybersecurity Portfolio</title>
+  
+  <!-- SEO & Open Graph Metadata -->
+  <meta name="description" content="Personal cybersecurity digital workspace & portfolio of Sabuj Biswas. Specializing in network security, ethical hacking, Linux administration, and security automation.">
+  <meta name="keywords" content="Sabuj Biswas, Cybersecurity, Network Security, Ethical Hacking, Linux, Cisco Packet Tracer, Python, Portfolio">
+  <meta name="author" content="Sabuj Biswas">
+  <meta name="theme-color" content="#080D0B">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SABUJ // CYBERSPACE — Cybersecurity Portfolio">
+  <meta property="og:description" content="Interactive cybersecurity dashboard & Linux terminal portfolio of Sabuj Biswas.">
+  <meta property="og:url" content="https://github.com/gitcolon-Sabuj">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Modular CSS Architecture -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/terminal.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
-<body>
-    <!-- Background glow shapes -->
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
 
-    <!-- Navigation -->
-    <header class="navbar-wrapper">
-        <nav class="navbar">
-            <a href="#hero" class="nav-logo">
-                <span class="logo-bracket">&lt;</span>Sabuj<span class="logo-dot">.</span>dev<span class="logo-bracket">/&gt;</span>
-            </a>
+<body class="booting">
+  <!-- Canvas Matrix Background -->
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-radial-glow" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li>
-                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="nav-btn-icon" title="GitHub Profile" aria-label="GitHub Profile">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero-section">
-            <div class="container hero-container">
-                <div class="hero-badge">
-                    <span class="badge-pulse"></span> Available for projects & opportunities
-                </div>
-                <h1 class="hero-title">
-                    Hi, I'm <span class="gradient-text">Sabuj Biswas</span>
-                </h1>
-                <h2 class="hero-subtitle">
-                    I build <span id="typing-text" class="typing-text">modern web experiences</span>
-                </h2>
-                <p class="hero-description">
-                    Passionate about crafting fast, accessible, and responsive web applications. Constantly learning modern technologies and turning ideas into clean, functional code.
-                </p>
-
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">
-                        <i class="fa-solid fa-laptop-code"></i> View Projects
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fa-solid fa-paper-plane"></i> Get In Touch
-                    </a>
-                </div>
-
-                <div class="hero-socials">
-                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub" aria-label="GitHub Profile">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn" aria-label="LinkedIn Profile">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-                    <a href="mailto:31.sabuj.biswas@gmail.com" class="social-link" title="Email Me" aria-label="Email Sabuj Biswas">
-                        <i class="fa-solid fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Overview</span>
-                    <h2 class="section-title">About Me</h2>
-                </div>
-
-                <div class="about-grid">
-                    <div class="about-content">
-                        <p class="about-lead">
-                            Hello! I am a passionate developer with a strong curiosity for creating interactive, user-friendly digital solutions.
-                        </p>
-                        <p>
-                            I specialize in front-end development, responsive web design, and cloud deployments. I enjoy transforming concepts into clean code and continually improving my skill set with the latest web standards.
-                        </p>
-                        <div class="about-highlights">
-                            <div class="highlight-item">
-                                <i class="fa-solid fa-bolt highlight-icon"></i>
-                                <div>
-                                    <h4>Fast & Responsive</h4>
-                                    <p>Optimized for lightning-fast loads across phones, tablets, and desktops.</p>
-                                </div>
-                            </div>
-                            <div class="highlight-item">
-                                <i class="fa-solid fa-code highlight-icon"></i>
-                                <div>
-                                    <h4>Clean Architecture</h4>
-                                    <p>Writing organized, maintainable HTML, modern CSS, and modular JavaScript.</p>
-                                </div>
-                            </div>
-                            <div class="highlight-item">
-                                <i class="fa-solid fa-cloud-arrow-up highlight-icon"></i>
-                                <div>
-                                    <h4>Continuous Deployment</h4>
-                                    <p>Automated Git CI/CD workflows hosted globally on Cloudflare edge network.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-card">
-                        <div class="code-editor-mockup">
-                            <div class="editor-header">
-                                <span class="dot dot-red"></span>
-                                <span class="dot dot-yellow"></span>
-                                <span class="dot dot-green"></span>
-                                <span class="editor-filename">developer.json</span>
-                            </div>
-                            <pre class="editor-body"><code>{
-  <span class="key">"name"</span>: <span class="val">"Sabuj Biswas"</span>,
-  <span class="key">"role"</span>: <span class="val">"Web Developer"</span>,
-  <span class="key">"status"</span>: <span class="val">"Open to collaborate"</span>,
-  <span class="key">"location"</span>: <span class="val">"India"</span>,
-  <span class="key">"skills"</span>: [
-    <span class="val">"HTML5"</span>,
-    <span class="val">"CSS3 / Flexbox / Grid"</span>,
-    <span class="val">"JavaScript (ES6+)"</span>,
-    <span class="val">"Git & GitHub"</span>,
-    <span class="val">"Cloudflare Edge"</span>
-  ],
-  <span class="key">"passion"</span>: <span class="val">"Building great software"</span>
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="skills-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Tech Stack</span>
-                    <h2 class="section-title">My Technical Skills</h2>
-                </div>
-
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper html-color">
-                            <i class="fa-brands fa-html5"></i>
-                        </div>
-                        <h3>HTML5</h3>
-                        <p>Semantic markup, SEO optimization, and accessibility best practices.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper css-color">
-                            <i class="fa-brands fa-css3-alt"></i>
-                        </div>
-                        <h3>CSS3 & Styling</h3>
-                        <p>Modern layouts with Flexbox & CSS Grid, responsive design, animations.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper js-color">
-                            <i class="fa-brands fa-js"></i>
-                        </div>
-                        <h3>JavaScript</h3>
-                        <p>DOM manipulation, asynchronous fetching, modern ES6+ features.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper git-color">
-                            <i class="fa-brands fa-git-alt"></i>
-                        </div>
-                        <h3>Git & GitHub</h3>
-                        <p>Version control, branching, collaboration, pull requests, and CI/CD.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper cloud-color">
-                            <i class="fa-solid fa-cloud"></i>
-                        </div>
-                        <h3>Cloudflare & Edge</h3>
-                        <p>Cloudflare Workers, Pages, edge CDN caching, and custom domain setup.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon-wrapper responsive-color">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                        </div>
-                        <h3>Responsive Design</h3>
-                        <p>Pixel-perfect display across mobile devices, tablets, and high-DPI displays.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Portfolio</span>
-                    <h2 class="section-title">Featured Projects</h2>
-                </div>
-
-                <div class="projects-grid">
-                    <!-- Project 1 -->
-                    <article class="project-card">
-                        <div class="project-preview">
-                            <div class="project-banner banner-1">
-                                <i class="fa-solid fa-globe banner-icon"></i>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-tags">
-                                <span class="tag">Cloudflare</span>
-                                <span class="tag">HTML5 / CSS3</span>
-                                <span class="tag">JavaScript</span>
-                            </div>
-                            <h3 class="project-title">Cloudflare Edge Developer Portfolio</h3>
-                            <p class="project-desc">
-                                A high-performance responsive personal website deployed directly to Cloudflare's global edge network with automated GitHub CI/CD integration.
-                            </p>
-                            <div class="project-links">
-                                <a href="https://sabujbiswas-github-io.31-sabuj-biswas.workers.dev" target="_blank" rel="noopener noreferrer" class="btn-link">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-                                </a>
-                                <a href="https://github.com/gitgreenn/sabujbiswas.github.io" target="_blank" rel="noopener noreferrer" class="btn-link">
-                                    <i class="fa-brands fa-github"></i> Code
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Project 2 -->
-                    <article class="project-card">
-                        <div class="project-preview">
-                            <div class="project-banner banner-2">
-                                <i class="fa-solid fa-code banner-icon"></i>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-tags">
-                                <span class="tag">JavaScript</span>
-                                <span class="tag">Async / Fetch</span>
-                                <span class="tag">UI / UX</span>
-                            </div>
-                            <h3 class="project-title">Dynamic Interactive Web App</h3>
-                            <p class="project-desc">
-                                Modern client-side application featuring dynamic components, state manipulation, interactive user feedback, and responsive layout.
-                            </p>
-                            <div class="project-links">
-                                <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="btn-link">
-                                    <i class="fa-brands fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Project 3 -->
-                    <article class="project-card">
-                        <div class="project-preview">
-                            <div class="project-banner banner-3">
-                                <i class="fa-solid fa-palette banner-icon"></i>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-tags">
-                                <span class="tag">CSS Grid</span>
-                                <span class="tag">Dark Mode</span>
-                                <span class="tag">Animations</span>
-                            </div>
-                            <h3 class="project-title">Modern Design Showcase</h3>
-                            <p class="project-desc">
-                                Collection of responsive layouts, custom CSS animations, glassmorphism cards, and fluid typography systems.
-                            </p>
-                            <div class="project-links">
-                                <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="btn-link">
-                                    <i class="fa-brands fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Connect</span>
-                    <h2 class="section-title">Let's Build Something Together</h2>
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-text">
-                        <h3>Interested in working together or have a question?</h3>
-                        <p>Feel free to reach out directly via email or connect with me on GitHub. I'm always open to discussing new projects, ideas, or opportunities.</p>
-                        <div class="contact-methods">
-                            <div class="contact-method-item">
-                                <i class="fa-solid fa-envelope"></i>
-                                <div>
-                                    <span class="method-label">Email</span>
-                                    <a href="mailto:31.sabuj.biswas@gmail.com" class="method-val">31.sabuj.biswas@gmail.com</a>
-                                </div>
-                            </div>
-                            <div class="contact-method-item">
-                                <i class="fa-brands fa-github"></i>
-                                <div>
-                                    <span class="method-label">GitHub</span>
-                                    <a href="https://github.com/gitgreenn" target="_blank" rel="noopener noreferrer" class="method-val">github.com/gitgreenn</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-actions">
-                        <a href="mailto:31.sabuj.biswas@gmail.com" class="btn btn-primary btn-large">
-                            <i class="fa-solid fa-paper-plane"></i> Send an Email
-                        </a>
-                        <button class="btn btn-secondary btn-large" id="copyEmailBtn">
-                            <i class="fa-regular fa-copy"></i> Copy Email Address
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <p>&copy; <span id="currentYear">2026</span> Sabuj Biswas. All rights reserved.</p>
-            <p class="footer-badge">
-                <i class="fa-solid fa-bolt"></i> Powered by Cloudflare & GitHub
-            </p>
+  <!-- LINUX BOOT SEQUENCE (Optional / Accessible / Skippable) -->
+  <div class="boot-screen" id="bootScreen" role="dialog" aria-modal="true" aria-label="System Boot Sequence">
+    <div class="boot-header">
+      <span class="boot-sys-name">SABUJ // CYBERSPACE OS v3.8 [BOOT SEQUENCE]</span>
+      <button class="boot-skip-btn" id="skipBootBtn" aria-label="Skip initialization sequence">
+        Skip Boot [ESC]
+      </button>
+    </div>
+    <div class="boot-terminal-body" id="bootLogs"></div>
+    <div class="boot-footer">
+      <div class="boot-progress-wrapper">
+        <div class="boot-progress-track">
+          <div class="boot-progress-bar" id="bootProgressBar"></div>
         </div>
-    </footer>
+        <span class="boot-percent" id="bootPercent">0%</span>
+      </div>
+    </div>
+  </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast" role="status" aria-live="polite">Email address copied to clipboard!</div>
+  <!-- MAIN NAVIGATION -->
+  <header class="navbar-wrapper">
+    <div class="container">
+      <nav class="navbar" aria-label="Main Navigation">
+        <div class="nav-brand">
+          <a href="#hero" class="nav-logo">
+            <i class="fa-solid fa-terminal nav-logo-icon"></i>
+            <span>SABUJ<span class="term-accent">.SYS</span></span>
+          </a>
+          <div class="nav-status-pill" title="Security Status">
+            <span class="status-dot-pulse"></span>
+            <!-- <span>SYS_ONLINE // AES-256</span> -->
+          </div>
+        </div>
 
-    <script src="js/script.js"></script>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#terminal" class="nav-link">Terminal</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#labs" class="nav-link">Security Labs</a></li>
+          <li><a href="#writeups" class="nav-link">Write-ups</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <div class="nav-socials">
+          <!-- <button class="cyber-sfx-toggle" title="Toggle Synthesized Web Audio Sound Effects" aria-label="Toggle Synthesized Audio">
+            <i class="fa-solid fa-volume-high"></i>
+            <span class="sfx-status-text">SFX: OFF</span>
+          </button> -->
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="GitHub Profile" aria-label="GitHub Profile">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="LinkedIn Profile" aria-label="LinkedIn Profile">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="navLinks">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-layout">
+          <!-- Left Column: Terminal Introduction -->
+          <div class="hero-terminal-card">
+            <div class="hero-prompt-line">
+              <span>root@cyberspace:~$</span>
+              <span class="hero-cmd" data-typewriter="whoami" data-type-delay="300">whoami</span>
+            </div>
+            
+            <h1 class="hero-name">
+              SABUJ <span class="hero-name-accent">BISWAS</span>
+            </h1>
+
+            <div class="hero-role-badge">
+              <i class="fa-solid fa-shield-virus"></i> Cybersecurity Enthusiast
+            </div>
+
+            <p class="hero-intro">
+              B.Tech Computer Science &amp; Engineering scholar specializing in <strong>Cyber Security</strong> at <strong>The Neotia University</strong>. Architecting isolated network topologies, researching protocol vulnerabilities, and engineering security automation scripts in Linux environments.
+            </p>
+
+            <div class="hero-skill-chips">
+              <span class="cyber-chip"><i class="fa-solid fa-network-wired"></i> Network Security</span>
+              <span class="cyber-chip"><i class="fa-solid fa-shield-halved"></i> Ethical Hacking</span>
+              <span class="cyber-chip"><i class="fa-brands fa-linux"></i> Linux Hardening</span>
+              <span class="cyber-chip"><i class="fa-brands fa-python"></i> Python Automation</span>
+            </div>
+
+            <div class="hero-cta-group">
+              <a href="#projects" class="cyber-btn">
+                <i class="fa-solid fa-folder-open"></i> Explore Projects
+              </a>
+              <a href="#terminal" class="cyber-btn cyber-btn-ghost">
+                <i class="fa-solid fa-terminal"></i> Launch Terminal
+              </a>
+              <a href="resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost">
+                <i class="fa-solid fa-file-arrow-down"></i> Resume [PDF]
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: System HUD Telemetry Card -->
+          <div class="hero-hud-card" id="heroTelemetryCard">
+            <div class="hud-header">
+              <span class="hud-title"><i class="fa-solid fa-microchip"></i> WORKSPACE TELEMETRY</span>
+              <button type="button" class="hud-badge-simulated" id="btnOpenHudFromHero" title="Click to open Cyber Control HUD">
+                <i class="fa-solid fa-sliders"></i> SIMULATED HUD [OPEN]
+              </button>
+            </div>
+
+            <div class="hud-specs-list">
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-regular fa-clock"></i> Local System Clock</span>
+                <span class="hud-value" id="dashLocalClock">--:--:-- LOCAL</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-stopwatch"></i> Session Uptime</span>
+                <span class="hud-value accent" id="dashUptime">00h:00m:00s</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-gauge-high"></i> Core CPU Allocation</span>
+                <span class="hud-value" id="dashCpuLoad">14% (Nominal)</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-network-wired"></i> Ping Latency</span>
+                <span class="hud-value accent" id="dashLatency">18ms (Verified)</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-shield"></i> Security Clearance</span>
+                <span class="hud-value cyan">LEVEL-3 RESEARCHER</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-graduation-cap"></i> University Degree</span>
+                <span class="hud-value">B.Tech CSE (Cyber)</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-chart-line"></i> Academic Score</span>
+                <span class="hud-value accent">7.9 CGPA (Class of 2026)</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-diagram-project"></i> Active Telemetry</span>
+                <span class="hud-value accent" id="telemetryPackets">1,420 pkts</span>
+              </div>
+              <div class="hud-spec-row">
+                <span class="hud-label"><i class="fa-solid fa-lock"></i> Channel Encryption</span>
+                <span class="hud-value accent">AES-256-GCM / TLS 1.3</span>
+              </div>
+            </div>
+
+            <button type="button" id="btnRunDiagnostics" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="width: 100%; margin-top: 16px;">
+              <i class="fa-solid fa-arrows-rotate"></i> Ping Live Telemetry Diagnostics
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TERMINAL SECTION -->
+    <section class="section-wrapper terminal-section" id="terminal">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-terminal"></i> Command Line Interface</span>
+          <h2 class="section-title">Interactive Terminal Workspace</h2>
+          <p class="section-subtitle">
+            An interactive Linux shell simulator. Execute commands to query credentials, projects, certifications, and system telemetry.
+          </p>
+        </div>
+
+        <div class="terminal-header-controls cyber-reveal">
+          <div class="terminal-quick-chips">
+            <span class="quick-chip-label">Quick Commands:</span>
+            <button class="term-quick-btn" data-cmd="help">help</button>
+            <button class="term-quick-btn" data-cmd="whoami">whoami</button>
+            <button class="term-quick-btn" data-cmd="neofetch">neofetch</button>
+            <button class="term-quick-btn" data-cmd="skills">skills</button>
+            <button class="term-quick-btn" data-cmd="projects">projects</button>
+            <button class="term-quick-btn" data-cmd="education">education</button>
+            <button class="term-quick-btn" data-cmd="certifications">certifications</button>
+            <button class="term-quick-btn" data-cmd="clear">clear</button>
+          </div>
+        </div>
+
+        <div class="terminal-window cyber-reveal" id="terminalWindow">
+          <div class="terminal-titlebar">
+            <div class="terminal-controls">
+              <button class="term-btn-ctrl ctrl-close" id="termBtnClose" title="Reset Terminal Buffer" aria-label="Reset Terminal Buffer"></button>
+              <button class="term-btn-ctrl ctrl-min" id="termBtnMin" title="Minimize / Restore Terminal" aria-label="Minimize or Restore Terminal"></button>
+              <button class="term-btn-ctrl ctrl-max" id="termBtnMax" title="Maximize Terminal Window" aria-label="Maximize Terminal Window"></button>
+            </div>
+            <div class="terminal-title">
+              <i class="fa-solid fa-terminal"></i>
+              <span>sabuj@cyberspace:~ (bash 5.2)</span>
+            </div>
+            <div class="terminal-session-status">SANDBOXED // SAFE DOM</div>
+          </div>
+
+          <div class="terminal-viewport" id="terminalOutput" role="log" aria-live="polite"></div>
+
+          <div class="terminal-input-bar">
+            <span class="term-prompt-active" id="terminalPrompt">sabuj@cyberspace:~$</span>
+            <input type="text" class="terminal-input-field" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type a command (try 'help' or 'neofetch')..." aria-label="Terminal Command Input">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="section-wrapper" id="about">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-user-shield"></i> Profile &amp; Journey</span>
+          <h2 class="section-title">About Sabuj Biswas</h2>
+        </div>
+
+        <div class="about-grid">
+          <!-- Left: Narrative -->
+          <div class="about-narrative-card cyber-reveal">
+            <p class="about-lead">
+              A computer science engineer with a dedicated focus on <strong>Cyber Security, Network Defense, and Systems Programming</strong>.
+            </p>
+            <p class="about-text">
+              My engineering philosophy revolves around understanding systems from the lowest packet layer upwards. Whether configuring complex multi-department VLAN architectures in Cisco Packet Tracer, auditing Linux system privileges, or building machine learning components from pure mathematics, I focus on deterministic logic, reliability, and security-first engineering.
+            </p>
+            <div class="about-objectives-box">
+              <div class="about-obj-title"><i class="fa-solid fa-crosshairs"></i> Strategic Career Objective</div>
+              <p class="about-obj-text">
+                Targeting roles in <strong>Network Engineering, Security Operations (SOC), Linux Administration</strong>, and technical security analysis where rigor, packet-level precision, and continuous learning create measurable defensive value.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Education Card -->
+          <div class="education-card cyber-reveal">
+            <div>
+              <div class="edu-header">
+                <div class="edu-icon-circle">
+                  <i class="fa-solid fa-university"></i>
+                </div>
+                <div>
+                  <h3 class="edu-institution">The Neotia University</h3>
+                  <div class="edu-degree">B.Tech in Computer Science and Engineering</div>
+                </div>
+              </div>
+              <p class="edu-specialization">
+                <strong>Academic Specialization:</strong> Cyber Security
+              </p>
+            </div>
+
+            <div class="edu-stats-grid">
+              <div class="edu-stat-item">
+                <span class="edu-stat-label">Graduation Year</span>
+                <span class="edu-stat-val">2026</span>
+              </div>
+              <div class="edu-stat-item">
+                <span class="edu-stat-label">Cumulative GPA</span>
+                <span class="edu-stat-val">7.9 / 10.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS SECTION -->
+    <section class="section-wrapper" id="skills">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-shield-halved"></i> Capabilities Matrix</span>
+          <h2 class="section-title">Technical Skills &amp; Domains</h2>
+          <p class="section-subtitle">
+            Categorized technical proficiencies structured across programming, networking, defensive cybersecurity, and professional engineering tools.
+          </p>
+        </div>
+
+        <div class="skills-categories-grid">
+          <!-- Programming -->
+          <div class="skill-category-card cyber-reveal">
+            <div class="category-header">
+              <i class="fa-solid fa-code"></i>
+              <h3 class="category-title">Programming &amp; Scripting</h3>
+            </div>
+            <div class="skills-list" id="skillsProgramming"></div>
+          </div>
+
+          <!-- Networking -->
+          <div class="skill-category-card cyber-reveal">
+            <div class="category-header">
+              <i class="fa-solid fa-network-wired"></i>
+              <h3 class="category-title">Networking &amp; Routing</h3>
+            </div>
+            <div class="skills-list" id="skillsNetworking"></div>
+          </div>
+
+          <!-- Cybersecurity -->
+          <div class="skill-category-card cyber-reveal">
+            <div class="category-header">
+              <i class="fa-solid fa-user-shield"></i>
+              <h3 class="category-title">Cybersecurity Fundamentals</h3>
+            </div>
+            <div class="skills-list" id="skillsCybersecurity"></div>
+          </div>
+
+          <!-- Tools & Environment -->
+          <div class="skill-category-card cyber-reveal">
+            <div class="category-header">
+              <i class="fa-solid fa-toolbox"></i>
+              <h3 class="category-title">Tools &amp; Environments</h3>
+            </div>
+            <div class="tools-flex-grid" id="skillsTools"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="section-wrapper" id="projects">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-folder-open"></i> Engineering Works</span>
+          <h2 class="section-title">Featured Technical Projects</h2>
+          <p class="section-subtitle">
+            Practical implementations across network architecture, computer vision automation, and algorithmic machine learning research.
+          </p>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid"></div>
+      </div>
+    </section>
+
+    <!-- SECURITY LABS SECTION -->
+    <section class="section-wrapper" id="labs">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-flask-vial"></i> Experimental Research</span>
+          <h2 class="section-title">Security &amp; Networking Labs</h2>
+          <p class="section-subtitle">
+            Hands-on technical laboratory simulations, firewall ruleset configurations, and systems hardening exercises.
+          </p>
+        </div>
+
+        <div class="labs-grid" id="securityLabsGrid"></div>
+
+        <!-- Interactive Hands-on Security Workbench -->
+        <div class="sim-workbench-card cyber-reveal">
+          <div class="sim-workbench-header">
+            <h3 class="sim-workbench-title">
+              <i class="fa-solid fa-microchip"></i> Interactive Lab Simulation Workbench
+            </h3>
+            <span class="cyber-tag">LIVE TESTING SANDBOX</span>
+          </div>
+
+          <div class="sim-grid-two-col">
+            <!-- Port Scanner Simulator -->
+            <div class="sim-subcard">
+              <div>
+                <h4 class="sim-subcard-title">
+                  <i class="fa-solid fa-radar"></i> Stealth SYN Port Scanner
+                </h4>
+                <p class="sim-subcard-desc">
+                  Simulate raw socket SYN reconnaissance against target IP to observe open ports, service banners, and firewall dropping.
+                </p>
+                <div class="sim-input-row">
+                  <input type="text" id="scanTargetInput" class="sim-input-field" value="192.168.10.1" placeholder="Target Host / IP..." aria-label="Port Scanner Target Host">
+                  <button type="button" id="btnRunPortScan" class="cyber-btn cyber-btn-sm">
+                    <i class="fa-solid fa-play"></i> Run SYN Scan
+                  </button>
+                </div>
+                <div class="sim-progress-track">
+                  <div class="sim-progress-fill" id="scannerProgress"></div>
+                </div>
+              </div>
+              <div class="sim-log-window" id="scannerLogOutput" role="log" aria-live="polite">
+                <div class="sim-log-line term-muted">Click 'Run SYN Scan' to initiate port reconnaissance simulation...</div>
+              </div>
+            </div>
+
+            <!-- VLAN Router-on-a-Stick Packet Flow Simulator -->
+            <div class="sim-subcard">
+              <div>
+                <h4 class="sim-subcard-title">
+                  <i class="fa-solid fa-network-wired"></i> VLAN 802.1Q &amp; ACL Packet Router
+                </h4>
+                <p class="sim-subcard-desc">
+                  Test Inter-VLAN sub-interface routing policies and evaluate Extended ACL-101 packet filtering rules.
+                </p>
+                <div class="sim-input-row">
+                  <select id="vlanSrcSelect" class="sim-select-field" aria-label="Source VLAN Network">
+                    <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                    <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+                    <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+                  </select>
+                  <select id="vlanDstSelect" class="sim-select-field" aria-label="Destination VLAN Network">
+                    <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+                    <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                    <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+                  </select>
+                </div>
+                <button type="button" id="btnDispatchPacket" class="cyber-btn cyber-btn-sm" style="width: 100%;">
+                  <i class="fa-solid fa-paper-plane"></i> Dispatch 802.1Q Packet Through Router
+                </button>
+              </div>
+              <div id="vlanResultStatus" class="vlan-result-box vlan-idle">
+                <i class="fa-solid fa-circle-info"></i> Select source/destination VLAN and dispatch test packet to verify routing &amp; ACL boundaries.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS SECTION -->
+    <section class="section-wrapper" id="certifications">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-certificate"></i> Verified Credentials</span>
+          <h2 class="section-title">Certifications &amp; Academics</h2>
+          <p class="section-subtitle">
+            Formal collegiate coursework and industry networking curriculum credentials.
+          </p>
+        </div>
+
+        <div class="certs-grid" id="certificationsGrid"></div>
+      </div>
+    </section>
+
+    <!-- SECURITY WRITE-UPS SECTION -->
+    <section class="section-wrapper" id="writeups">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-book-bookmark"></i> Technical Documentation</span>
+          <h2 class="section-title">Security Write-ups &amp; Notes</h2>
+          <p class="section-subtitle">
+            Technical breakdowns covering enterprise network segmentation, Linux defense mechanisms, and foundational ML mechanics.
+          </p>
+        </div>
+
+        <div class="writeups-grid" id="writeupsGrid"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section-wrapper" id="contact">
+      <div class="container">
+        <div class="section-header cyber-reveal">
+          <span class="section-tag"><i class="fa-solid fa-envelope-open-text"></i> Secure Comms</span>
+          <h2 class="section-title">Initiate Contact</h2>
+          <p class="section-subtitle">
+            Reach out for technical collaborations, security research inquiries, or professional opportunities.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <!-- Left: Direct Channels -->
+          <div class="contact-info-card cyber-reveal">
+            <h3 class="contact-headline">Direct Communication Channels</h3>
+            <p class="contact-text">
+              Direct email and verified social directory for Sabuj Biswas. Feel free to copy my direct email or connect through LinkedIn.
+            </p>
+
+            <div class="contact-channel-list">
+              <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+                <i class="fa-brands fa-linkedin-in"></i>
+                <div>
+                  <span class="channel-label">LinkedIn Profile</span>
+                  <span class="channel-val">linkedin.com/in/sabujbiswas-link/</span>
+                </div>
+              </a>
+
+              <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+                <i class="fa-brands fa-github"></i>
+                <div>
+                  <span class="channel-label">GitHub Repository</span>
+                  <span class="channel-val">github.com/gitcolon-Sabuj</span>
+                </div>
+              </a>
+
+              <div class="contact-channel-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <span class="channel-label">Base Location</span>
+                  <span class="channel-val">Kolkata, India</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="cyber-btn btn-copy-email" type="button">
+              <i class="fa-solid fa-copy"></i> Copy Direct Email Address
+            </button>
+          </div>
+
+          <!-- Right: Interactive Form -->
+          <div class="contact-form-card cyber-reveal">
+            <h3 class="form-title"><i class="fa-solid fa-paper-plane"></i> Dispatch Encrypted Inquiry</h3>
+            
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="formName" class="form-label">Operator / Sender Name *</label>
+                <input type="text" id="formName" name="name" class="form-input" placeholder="e.g. Alex Vance" required>
+              </div>
+
+              <div class="form-group">
+                <label for="formEmail" class="form-label">Return Communication Email *</label>
+                <input type="email" id="formEmail" name="email" class="form-input" placeholder="e.g. alex@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="formSubject" class="form-label">Transmission Subject</label>
+                <input type="text" id="formSubject" name="subject" class="form-input" placeholder="e.g. Cybersecurity Research / Internship Opportunity">
+              </div>
+
+              <div class="form-group">
+                <label for="formMessage" class="form-label">Message Payload *</label>
+                <textarea id="formMessage" name="message" class="form-textarea" placeholder="Enter transmission payload here..." required></textarea>
+              </div>
+
+              <div id="formFeedback" class="form-status" role="alert"></div>
+
+              <button type="submit" class="cyber-btn">
+                <i class="fa-solid fa-terminal"></i> Dispatch Transmission
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DIALOG COMPONENT -->
+  <div class="cyber-modal" id="cyberModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Technical Specification</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Dialog Window">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-layout">
+        <div class="footer-left">
+          <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+          <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero external tracking.</span>
+        </div>
+        <div class="footer-right">
+          <span>HOSTED VIA GITHUB &amp; CLOUDFLARE</span>
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="GitHub" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="LinkedIn" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING CYBER CONTROL HUD TRIGGER & DRAWER -->
+  <button class="cyber-hud-drawer-trigger" id="hudDrawerToggle" aria-label="Open Cyber Control HUD" title="Open Cyber Control HUD">
+    <i class="fa-solid fa-sliders"></i>
+    <span>CYBER HUD</span>
+  </button>
+
+  <aside class="cyber-control-hud" id="cyberControlHud" role="dialog" aria-modal="false" aria-label="Cyber Control HUD">
+    <div class="hud-panel-header">
+      <span class="hud-panel-title">
+        <i class="fa-solid fa-microchip"></i> WORKSPACE CONTROLS
+      </span>
+      <button class="hud-close-btn" id="hudDrawerClose" aria-label="Close Cyber HUD">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Theme Palette Selector -->
+    <div class="hud-control-group">
+      <span class="hud-group-label">Color Scheme (Themes)</span>
+      <div class="hud-theme-grid">
+        <button type="button" class="theme-btn active" data-theme-set="green" title="Matrix Green">
+          <span class="theme-btn-dot dot-green"></span>
+          <span>Matrix</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme-set="amber" title="Amber Phosphor CRT">
+          <span class="theme-btn-dot dot-amber"></span>
+          <span>Amber</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme-set="cyan" title="Cyberpunk Cyan">
+          <span class="theme-btn-dot dot-cyan"></span>
+          <span>Cyan</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme-set="red" title="Red Team Emergency">
+          <span class="theme-btn-dot dot-red"></span>
+          <span>RedTeam</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Matrix Rain Speed Controls -->
+    <div class="hud-control-group">
+      <span class="hud-group-label">Matrix Rain Speed</span>
+      <div class="hud-btn-row">
+        <button type="button" class="matrix-speed-btn" data-speed="pause">Pause</button>
+        <button type="button" class="matrix-speed-btn" data-speed="80">Slow</button>
+        <button type="button" class="matrix-speed-btn active" data-speed="50">Normal</button>
+        <button type="button" class="matrix-speed-btn" data-speed="25">Turbo</button>
+      </div>
+    </div>
+
+    <!-- Visual Filters & Audio SFX -->
+    <div class="hud-control-group">
+      <span class="hud-group-label">Display &amp; Sensory FX</span>
+      <div class="hud-switch-row">
+        <span>CRT Scanline Overlay</span>
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+          <input type="checkbox" id="toggleCrtScanlines" checked>
+          <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+        </label>
+      </div>
+      <div class="hud-switch-row">
+        <span>Terminal Audio Keystrokes</span>
+        <button type="button" class="cyber-sfx-toggle">
+          <i class="fa-solid fa-volume-high"></i>
+          <span class="sfx-status-text">SFX: OFF</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Script Architecture -->
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,259 @@
+/**
+ * SABUJ // CYBERSPACE - Responsive Design Breakpoints
+ * Ensures flawless presentation across 1920px, 1366px, 1024px, 768px, and 375px viewports.
+ */
+
+/* ================= LARGE SCREENS (<= 1200px) ================= */
+@media (max-width: 1200px) {
+  .hero-layout {
+    gap: 32px;
+  }
+
+  .skills-categories-grid {
+    gap: 20px;
+  }
+}
+
+/* ================= TABLETS & MEDIUM VIEWPORTS (<= 992px) ================= */
+@media (max-width: 992px) {
+  .section-wrapper {
+    padding: 70px 0;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* ================= MOBILE VIEWPORTS (<= 768px) ================= */
+@media (max-width: 768px) {
+  .navbar-wrapper {
+    height: 70px;
+  }
+
+  .navbar {
+    height: 70px;
+  }
+
+  .nav-status-pill {
+    display: none;
+  }
+
+  .nav-socials .sfx-status-text {
+    display: none;
+  }
+
+  .nav-socials .cyber-sfx-toggle {
+    padding: 7px 10px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(8, 13, 11, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border-active);
+    flex-direction: column;
+    padding: 24px;
+    gap: 20px;
+    align-items: flex-start;
+    transform: translateY(-150%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  }
+
+  .nav-links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-link {
+    font-size: 1.05rem;
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .hero-section {
+    padding-top: 105px;
+    padding-bottom: 50px;
+  }
+
+  .hero-terminal-card {
+    padding: 24px;
+  }
+
+  .hero-name {
+    font-size: 2.2rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+  }
+
+  .hero-cta-group .cyber-btn {
+    width: 100%;
+  }
+
+  .terminal-viewport {
+    height: 320px;
+    padding: 14px;
+    font-size: 0.82rem;
+  }
+
+  .terminal-input-bar {
+    padding: 10px 14px;
+  }
+
+  .term-prompt-active {
+    font-size: 0.8rem;
+  }
+
+  .terminal-input-field {
+    font-size: 0.82rem;
+  }
+
+  .terminal-quick-chips {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .term-quick-btn {
+    flex-shrink: 0;
+  }
+
+  .projects-grid,
+  .labs-grid,
+  .certs-grid,
+  .writeups-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edu-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tools-flex-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-grid-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialog {
+    max-height: 92vh;
+  }
+
+  .site-footer {
+    padding: 30px 0 25px;
+  }
+
+  .footer-layout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* ================= SMALL TABLETS & LARGE PHONES (<= 600px) ================= */
+@media (max-width: 600px) {
+  .sim-input-row {
+    flex-direction: column;
+  }
+
+  .sim-input-row .cyber-btn {
+    width: 100%;
+  }
+
+  .sim-workbench-card {
+    padding: 20px 16px;
+  }
+
+  .sim-workbench-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* ================= SMALL PHONES (<= 480px) ================= */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .section-title {
+    font-size: 1.55rem;
+  }
+
+  .hero-name {
+    font-size: 1.85rem;
+  }
+
+  .boot-screen {
+    padding: 16px;
+  }
+
+  .boot-sys-name {
+    font-size: 0.8rem;
+  }
+
+  .boot-terminal-body {
+    font-size: 0.78rem;
+  }
+
+  .contact-info-card,
+  .contact-form-card,
+  .hero-hud-card,
+  .about-narrative-card,
+  .education-card {
+    padding: 20px;
+  }
+
+  .cert-card {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cyber-control-hud {
+    width: calc(100vw - 32px);
+    right: 16px;
+    bottom: 70px;
+  }
+
+  .cyber-hud-drawer-trigger {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
