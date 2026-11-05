@@ -1,0 +1,183 @@
+/* ================= INTERACTIVE SIMULATORS (LAB WORKBENCH) ================= */
+.sim-workbench-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.sim-workbench-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sim-workbench-title {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--accent-green);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-grid-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.sim-subcard {
+  background: #060b08;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sim-subcard-title {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sim-subcard-title i {
+  color: var(--accent-cyan);
+}
+
+.sim-subcard-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.sim-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.sim-select-field,
+.sim-input-field {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  background: rgba(13, 21, 17, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+}
+
+.sim-select-field option {
+  background: #0d1511;
+  color: #fff;
+}
+
+.sim-progress-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.sim-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green-glow);
+  transition: width 0.2s ease-out;
+}
+
+.sim-log-window {
+  background: #040705;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  height: 140px;
+  overflow-y: auto;
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.sim-log-line {
+  margin-bottom: 4px;
+}
+
+.vlan-result-box {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-top: 14px;
+}
+
+.vlan-idle {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.vlan-processing {
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: var(--accent-cyan);
+}
+
+.vlan-allowed {
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+}
+
+.vlan-denied {
+  background: rgba(255, 51, 102, 0.08);
+  border: 1px solid var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* Scrollbars for Modal & Simulator Logs */
+.modal-body::-webkit-scrollbar,
+.sim-log-window::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track,
+.sim-log-window::-webkit-scrollbar-track {
+  background: #050807;
+}
+
+.modal-body::-webkit-scrollbar-thumb,
+.sim-log-window::-webkit-scrollbar-thumb {
+  background: var(--border-solid);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover,
+.sim-log-window::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dark-green);
+}
+
+/* Guard against HUD overlap when terminal is maximized */
+body.terminal-maximized .cyber-hud-drawer-trigger,
+body.terminal-maximized .cyber-control-hud {
+  display: none !important;
+}

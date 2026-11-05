@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 05: Web Security & OWASP Top 10 Testing // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Lab Report: Hands-on analysis of OWASP Top 10 application security vulnerabilities: SQL Injection, XSS, and parameterized defenses.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /labs/</span>
+        <span class="current-page">owasp-web-testing.lab</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#labs" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SEC.LAB // 05</span>
+          <span class="status-progress" style="padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.75rem;">
+            <i class="fa-solid fa-flask"></i> STATUS: ACTIVE RESEARCH
+          </span>
+          <span class="cyber-chip"><i class="fa-solid fa-bug"></i> Web Security</span>
+        </div>
+
+        <h1 class="detail-title">Web Security: OWASP Top 10 Hands-on Testing</h1>
+        <p class="detail-lead">
+          Systematic laboratory analysis of application-layer vulnerabilities. Practiced input sanitization auditing, SQL Injection payload analysis, Cross-Site Scripting (XSS) vectors, and defensive HTTP security headers.
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Testing Sandbox</span>
+            <span class="meta-value">OWASP Juice Shop / DVWA</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Interception Proxy</span>
+            <span class="meta-value">Burp Suite Community Edition</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Primary Attack Vector</span>
+            <span class="meta-value">Unsanitized Input Concatenation</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Remediation Focus</span>
+            <span class="meta-value">Parameterized Queries &amp; CSP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-content-section">
+      <div class="container">
+        <article class="doc-section">
+          <span class="doc-tag">01 // VULNERABILITY ANALYSIS</span>
+          <h2 class="doc-heading">SQL Injection (SQLi) Vulnerability Mechanics</h2>
+          <p class="doc-body-text">
+            When user input is directly concatenated into database queries without escaping or parameterized bindings, an adversary can manipulate the boolean logic of the query statement to bypass authentication or extract sensitive tables.
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-database"></i> SQLi Analysis &amp; Remediation</span>
+            </div>
+            <pre><code>-- Vulnerable Raw Query Concatenation:
+SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1';
+
+-- Secure Parameterized Prepared Statement (Defense):
+cursor.execute("SELECT * FROM users WHERE username = ? AND password_hash = ?", (user, hash_val))</code></pre>
+          </div>
+        </article>
+
+        <article class="doc-section">
+          <span class="doc-tag">02 // DEFENSIVE HEADERS</span>
+          <h2 class="doc-heading">Hardened HTTP Header Architecture</h2>
+          <p class="doc-body-text">
+            Modern web applications must enforce strict browser-enforced security boundaries:
+          </p>
+
+          <div class="verif-matrix">
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-shield-halved"></i> Content-Security-Policy (CSP)
+              </div>
+              <p>Restricts script execution origins, preventing inline execution of injected XSS payloads: <code>script-src 'self'</code>.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-lock"></i> Strict-Transport-Security (HSTS)
+              </div>
+              <p>Forces all browser traffic across HTTPS exclusively, mitigating SSL stripping and downgrade attacks.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-cookie"></i> Secure &amp; HttpOnly Cookies
+              </div>
+              <p>Flags session tokens with <code>HttpOnly; Secure; SameSite=Strict</code> to prevent client-side JavaScript access via XSS.</p>
+            </div>
+          </div>
+        </article>
+
+        <div class="detail-actions-footer">
+          <a href="../index.html#labs" class="cyber-btn">
+            <i class="fa-solid fa-flask"></i> Return to Security Labs
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>

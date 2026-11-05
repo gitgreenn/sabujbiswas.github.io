@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyLLM — Personal Language Model // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Case Study: Building a causal transformer-based language model from scratch in Python and PyTorch. Understanding multi-head self-attention and loss optimization.">
+    <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <!-- Breadcrumb Navigation Bar -->
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /projects/</span>
+        <span class="current-page">myllm-language-model.spec</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#projects" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Project Hero Header -->
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SYS.PROJ // 03</span>
+          <span class="cyber-chip"><i class="fa-solid fa-brain"></i> Neural Architecture</span>
+          <span class="cyber-chip"><i class="fa-brands fa-python"></i> PyTorch &amp; NumPy</span>
+          <span class="cyber-chip"><i class="fa-solid fa-microchip"></i> Transformer Attention</span>
+        </div>
+
+        <h1 class="detail-title">MyLLM — Personal Language Model</h1>
+        <p class="detail-lead">
+          A first-principles deep learning research implementation of an autoregressive generative transformer. Built without high-level black-box wrappers to master subword tokenization, scaled dot-product attention mechanics, causal masking matrices, and cross-entropy gradient dynamics.
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Core Paradigm</span>
+            <span class="meta-value">Autoregressive Decoder Transformer</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Mathematical Core</span>
+            <span class="meta-value">Scaled Dot-Product Attention</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Optimization</span>
+            <span class="meta-value">AdamW + Cosine LR Schedule</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Inference Sampler</span>
+            <span class="meta-value">Temperature + Top-K Filtering</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Case Study Content -->
+    <section class="detail-content-section">
+      <div class="container">
+        <!-- 01: Architecture Blueprint -->
+        <article class="doc-section">
+          <span class="doc-tag">01 // NEURAL TOPOLOGY</span>
+          <h2 class="doc-heading">Transformer Architecture Schematic</h2>
+          <p class="doc-body-text">
+            The neural computation graph flows from discrete input token IDs through learned embedding matrices and sinusoidal positional encoders, into multi-layer causal self-attention blocks with LayerNorm and residual bypasses, finally projecting onto linear vocabulary logits.
+          </p>
+          
+          <div class="detail-schematic-card">
+            <img src="../assets/images/myllm-transformer.svg" alt="MyLLM Transformer Neural Architecture" class="detail-schematic-img">
+          </div>
+        </article>
+
+        <!-- 02: Mathematical Formulation -->
+        <article class="doc-section">
+          <span class="doc-tag">02 // MATHEMATICAL FOUNDATION</span>
+          <h2 class="doc-heading">The Mechanics of Causal Self-Attention</h2>
+          <p class="doc-body-text">
+            Given an input representation matrix <code>X</code>, linear projection weights generate Query (Q), Key (K), and Value (V) tensors. The attention weight distribution is computed by dot-product similarity, scaled by the square root of key dimension <code>d_k</code> to prevent vanishing softmax gradients:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-square-root-variable"></i> Attention Equation &amp; Causal Mask</span>
+            </div>
+            <pre><code>Attention(Q, K, V) = softmax( (Q * K^T) / sqrt(d_k) + M ) * V
+
+Where Mask M is an upper-triangular matrix:
+M[i, j] = 0        for i >= j (past and current tokens)
+M[i, j] = -infinity for i < j  (future tokens prevented from attending)</code></pre>
+          </div>
+        </article>
+
+        <!-- 03: PyTorch Implementation -->
+        <article class="doc-section">
+          <span class="doc-tag">03 // CODE IMPLEMENTATION</span>
+          <h2 class="doc-heading">PyTorch Causal Self-Attention Module</h2>
+          <p class="doc-body-text">
+            Below is the verified PyTorch module defining causal multi-head self-attention with tensor transposition and causal lower-triangular masking:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-brands fa-python"></i> PyTorch // attention.py</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import math
+
+class CausalSelfAttention(nn.Module):
+    def __init__(self, embed_dim=256, num_heads=4, block_size=128, dropout=0.1):
+        super().__init__()
+        assert embed_dim % num_heads == 0, "embed_dim must be divisible by num_heads"
+        self.num_heads = num_heads
+        self.head_dim = embed_dim // num_heads
+
+        # Key, Query, Value projections combined into a single matrix for efficiency
+        self.c_attn = nn.Linear(embed_dim, 3 * embed_dim)
+        self.c_proj = nn.Linear(embed_dim, embed_dim)
+        self.dropout = nn.Dropout(dropout)
+
+        # Causal mask register: lower triangular 1s, upper triangular 0s
+        self.register_buffer(
+            "bias",
+            torch.tril(torch.ones(block_size, block_size)).view(1, 1, block_size, block_size)
+        )
+
+    def forward(self, x):
+        B, T, C = x.size() # Batch, Sequence Length, Embedding Dimension
+
+        # Calculate Query, Key, Value vectors for all heads in batch
+        q, k, v = self.c_attn(x).split(C, dim=2)
+        k = k.view(B, T, self.num_heads, self.head_dim).transpose(1, 2) # (B, nh, T, hs)
+        q = q.view(B, T, self.num_heads, self.head_dim).transpose(1, 2)
+        v = v.view(B, T, self.num_heads, self.head_dim).transpose(1, 2)
+
+        # Scaled dot-product attention
+        att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
+        # Enforce causality: mask out future tokens with -inf
+        att = att.masked_fill(self.bias[:, :, :T, :T] == 0, float('-inf'))
+        att = F.softmax(att, dim=-1)
+        att = self.dropout(att)
+
+        y = att @ v # (B, nh, T, hs)
+        y = y.transpose(1, 2).contiguous().view(B, T, C) # Re-assemble head outputs
+        return self.c_proj(y)</code></pre>
+          </div>
+        </article>
+
+        <!-- 04: AI Safety & Adversarial Considerations -->
+        <article class="doc-section">
+          <span class="doc-tag">04 // CYBERSECURITY PERSPECTIVE</span>
+          <h2 class="doc-heading">AI Safety &amp; Adversarial Prompt Injection Defense</h2>
+          
+          <div class="security-callout">
+            <div class="security-callout-title">
+              <i class="fa-solid fa-shield-virus"></i> Jailbreaking &amp; Indirect Prompt Injection Analysis
+            </div>
+            <p class="security-callout-text">
+              Building a model from scratch provides deep insight into why LLMs are susceptible to prompt injection: neural architectures treat system instructions and user input as an identical sequence of concatenated tokens. Future security exploration focuses on dual-stream attention to separate instruction channels from untrusted data payloads.
+            </p>
+          </div>
+        </article>
+
+        <!-- Actions Footer -->
+        <div class="detail-actions-footer">
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn">
+            <i class="fa-brands fa-github"></i> Inspect GitHub Repository
+          </a>
+          <a href="../index.html#projects" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-arrow-left"></i> Return to Projects
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>

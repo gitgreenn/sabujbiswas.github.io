@@ -1,0 +1,196 @@
+/* ================= CYBER CONTROL HUD DRAWER ================= */
+.cyber-hud-drawer-trigger {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  right: max(24px, env(safe-area-inset-right));
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(13, 21, 17, 0.9);
+  border: 1px solid var(--border-active);
+  border-radius: 30px;
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-green-dim);
+  transition: all var(--transition-fast);
+}
+
+.cyber-hud-drawer-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--accent-green-glow);
+}
+
+.cyber-control-hud {
+  position: fixed;
+  bottom: 80px;
+  bottom: max(80px, calc(env(safe-area-inset-bottom) + 60px));
+  right: 24px;
+  right: max(24px, env(safe-area-inset-right));
+  width: 330px;
+  max-height: calc(100vh - 100px);
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(10, 16, 13, 0.96);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  z-index: 9999;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-green-dim);
+  backdrop-filter: blur(15px);
+  font-family: var(--font-mono);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px) scale(0.96);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-control-hud.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.hud-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 16px;
+}
+
+.hud-panel-title {
+  color: var(--accent-green);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-close-btn {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.hud-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.hud-control-group {
+  margin-bottom: 18px;
+}
+
+.hud-group-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* Theme Buttons in HUD */
+.hud-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.theme-btn {
+  padding: 6px 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--transition-fast);
+}
+
+.theme-btn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-green { background: #00FF88; box-shadow: 0 0 6px #00FF88; }
+.dot-amber { background: #FFB703; box-shadow: 0 0 6px #FFB703; }
+.dot-cyan  { background: #00E5FF; box-shadow: 0 0 6px #00E5FF; }
+.dot-red   { background: #FF3366; box-shadow: 0 0 6px #FF3366; }
+
+.theme-btn:hover,
+.theme-btn.active {
+  border-color: var(--accent-green);
+  color: #fff;
+  background: var(--accent-green-dim);
+  box-shadow: 0 0 10px var(--accent-green-dim);
+}
+
+/* Matrix Speed Buttons */
+.hud-btn-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.matrix-speed-btn {
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.matrix-speed-btn:hover,
+.matrix-speed-btn.active {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  background: var(--accent-green-dim);
+}
+
+/* SFX Audio Button & Checkbox */
+.hud-switch-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+.cyber-sfx-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cyber-sfx-toggle.sfx-active {
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+  background: var(--accent-green-dim);
+}

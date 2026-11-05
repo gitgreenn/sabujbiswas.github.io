@@ -1,0 +1,48 @@
+<!-- INTERACTIVE TERMINAL SECTION -->
+<section class="section-wrapper terminal-section" id="terminal">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-terminal"></i> Command Line Interface</span>
+      <h2 class="section-title">Interactive Terminal Workspace</h2>
+      <p class="section-subtitle">
+        An interactive Linux shell simulator. Execute commands to query credentials, projects, certifications, and system telemetry.
+      </p>
+    </div>
+
+    <div class="terminal-header-controls cyber-reveal">
+      <div class="terminal-quick-chips">
+        <span class="quick-chip-label">Quick Commands:</span>
+        <button class="term-quick-btn" data-cmd="help">help</button>
+        <button class="term-quick-btn" data-cmd="whoami">whoami</button>
+        <button class="term-quick-btn" data-cmd="neofetch">neofetch</button>
+        <button class="term-quick-btn" data-cmd="skills">skills</button>
+        <button class="term-quick-btn" data-cmd="projects">projects</button>
+        <button class="term-quick-btn" data-cmd="education">education</button>
+        <button class="term-quick-btn" data-cmd="certifications">certifications</button>
+        <button class="term-quick-btn" data-cmd="clear">clear</button>
+      </div>
+    </div>
+
+    <div class="terminal-window cyber-reveal" id="terminalWindow">
+      <div class="terminal-titlebar">
+        <div class="terminal-controls">
+          <button class="term-btn-ctrl ctrl-close" id="termBtnClose" title="Reset Terminal Buffer" aria-label="Reset Terminal Buffer"></button>
+          <button class="term-btn-ctrl ctrl-min" id="termBtnMin" title="Minimize / Restore Terminal" aria-label="Minimize or Restore Terminal"></button>
+          <button class="term-btn-ctrl ctrl-max" id="termBtnMax" title="Maximize Terminal Window" aria-label="Maximize Terminal Window"></button>
+        </div>
+        <div class="terminal-title">
+          <i class="fa-solid fa-terminal"></i>
+          <span>sabuj@cyberspace:~ (bash 5.2)</span>
+        </div>
+        <div class="terminal-session-status">SANDBOXED // SAFE DOM</div>
+      </div>
+
+      <div class="terminal-viewport" id="terminalOutput" role="log" aria-live="polite"></div>
+
+      <div class="terminal-input-bar">
+        <span class="term-prompt-active" id="terminalPrompt">sabuj@cyberspace:~$</span>
+        <input type="text" class="terminal-input-field" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type a command (try 'help' or 'neofetch')..." aria-label="Terminal Command Input">
+      </div>
+    </div>
+  </div>
+</section>

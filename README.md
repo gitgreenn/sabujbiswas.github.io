@@ -60,14 +60,34 @@
 
 ---
 
-## 📁 Project Architecture
+## 📁 Modular Section Architecture
 
 ```
 Portfolio/
-├── index.html                  # Accessible, semantic master layout
+├── sections/                   # MODULAR HTML SECTIONS (Edit cards here!)
+│   ├── boot.html               # Linux startup initialization sequence
+│   ├── nav.html                # Responsive navigation bar
+│   ├── hero.html               # Hero workspace introduction & telemetry HUD
+│   ├── terminal.html           # Interactive Linux terminal workspace
+│   ├── about.html              # Academic timeline & career objectives
+│   ├── skills.html             # Capabilities matrix (Programming, Net, Security, Tools)
+│   ├── projects.html           # Featured engineering projects & architecture deep dives
+│   ├── labs.html               # Security labs & live simulation workbench
+│   ├── certs.html              # Verified certifications & academic credentials
+│   ├── writeups.html           # Technical security write-ups & research notes
+│   ├── contact.html            # Encrypted transmission form & social channels
+│   ├── modal.html              # Dialog modal reader component
+│   ├── footer.html             # Footer layout
+│   └── hud.html                # Floating Cyber Control HUD drawer
+│
+├── index.template.html         # Assembly shell with modular include tags
+├── build.js                    # Instant section compiler (compiles in ~10ms)
+├── build.bat                   # Double-clickable Windows compiler batch script
+├── package.json                # npm scripts for dev and watch workflows
+├── index.html                  # Compiled production-ready master layout (100% offline)
 │
 ├── css/
-│   ├── style.css               # Core design system, multi-theme variables & HUD
+│   ├── style.css               # Core design system, multi-theme variables & 3D tilt
 │   ├── terminal.css            # Linux terminal window styling
 │   ├── animations.css          # Matrix canvas, keyframes & scanlines
 │   └── responsive.css          # Viewport breakpoints (1920px down to 375px)
@@ -75,14 +95,15 @@ Portfolio/
 ├── js/
 │   ├── config.js               # Central source of truth (frozen data object)
 │   ├── audio.js                # Web Audio API acoustic synthesizer (zero downloads)
-│   ├── animations.js           # Matrix rain engine with speed & theme reactivity
+│   ├── animations.js           # Matrix rain engine & 3D perspective tilt
+│   ├── cursor.js               # Military-grade reticle cursor with magnetic lock
 │   ├── theme.js                # Multi-palette theme manager (Green, Amber, Cyan, Red)
 │   ├── terminal.js             # Sandboxed terminal simulator with custom CLI commands
 │   ├── dashboard.js            # HUD telemetry, interactive simulators & modal reader
 │   └── main.js                 # Boot sequence & navigation handlers
 │
 ├── assets/
-│   ├── images/                 # Project screenshots and diagrams
+│   ├── images/                 # Project blueprints & vector SVG schematics
 │   ├── icons/                  # Custom cybersecurity SVG icons
 │   └── certificates/           # Verification certificate scans
 │
@@ -93,6 +114,22 @@ Portfolio/
 │
 └── README.md                   # Documentation and deployment guide
 ```
+
+---
+
+## 🛠️ How to Add a New Project, Skill, or Lab
+
+1. Open the dedicated section file (e.g. [`sections/projects.html`](sections/projects.html) or [`sections/skills.html`](sections/skills.html)).
+2. Copy any existing card and paste your new information.
+3. Save and re-compile:
+   - **On Windows**: Simply **double-click [`build.bat`](build.bat)**.
+   - **Or in Terminal**: Run `node build.js` (or `npm run watch` for live auto-compile while you type).
+4. Refresh your browser! The new card automatically gets:
+   - 3D perspective mouse tilt
+   - Specular sheen light reflection
+   - Military reticle cursor locking (`LOCKED`)
+   - Active color theme styling & hover glows
+   - Scroll-reveal animations
 
 ---
 

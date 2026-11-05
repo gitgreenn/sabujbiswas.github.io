@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 01: Inter-VLAN Routing & Subnet Hardening // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Lab Report: Inter-VLAN Routing & Subnet Hardening in Cisco Packet Tracer. 802.1Q trunking and ACL security filtering.">
+    <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <!-- Breadcrumb Navigation Bar -->
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /labs/</span>
+        <span class="current-page">inter-vlan-routing.lab</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#labs" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SEC.LAB // 01</span>
+          <span class="status-completed" style="padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.75rem;">
+            <i class="fa-solid fa-circle-check"></i> STATUS: COMPLETED
+          </span>
+          <span class="cyber-chip"><i class="fa-solid fa-network-wired"></i> Network Security</span>
+        </div>
+
+        <h1 class="detail-title">Inter-VLAN Routing &amp; Subnet Hardening</h1>
+        <p class="detail-lead">
+          Hands-on simulation isolating Layer-2 broadcast domains across departmental endpoints. Configured IEEE 802.1Q encapsulation on trunk links and created router sub-interfaces to control ingress/egress inter-subnet traversal with Access Control Lists.
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Environment</span>
+            <span class="meta-value">Cisco Packet Tracer / GNS3</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Hardware Profile</span>
+            <span class="meta-value">Cisco 2901 Router + Catalyst 2960</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Key Protocol</span>
+            <span class="meta-value">IEEE 802.1Q (Encapsulation dot1q)</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Security Objective</span>
+            <span class="meta-value">Strict VLAN Boundary Isolation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-content-section">
+      <div class="container">
+        <!-- 01: Lab Objective -->
+        <article class="doc-section">
+          <span class="doc-tag">01 // LAB OBJECTIVE &amp; SCENARIO</span>
+          <h2 class="doc-heading">Problem Scenario</h2>
+          <p class="doc-body-text">
+            In an unsegmented corporate network, malicious lateral movement, unauthorized sniffing, and ARP poisoning present critical risks. The objective of this lab is to partition physical switches into logical VLANs (Engineering, HR, Management), construct an 802.1Q trunk uplink to a Core Router, and test packet drop policies.
+          </p>
+
+          <div class="detail-schematic-card">
+            <img src="../assets/images/vlan-topology.svg" alt="VLAN Topology" class="detail-schematic-img">
+          </div>
+        </article>
+
+        <!-- 02: Switch Configuration CLI -->
+        <article class="doc-section">
+          <span class="doc-tag">02 // CISCO IOS SWITCH CONFIGURATION</span>
+          <h2 class="doc-heading">Switch Port Allocation &amp; Trunking</h2>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-terminal"></i> Catalyst-2960-Switch.cfg</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>Switch> enable
+Switch# configure terminal
+! Create VLANs with descriptive names
+Switch(config)# vlan 10
+Switch(config-vlan)# name Engineering
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 20
+Switch(config-vlan)# name Guest_Network
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 30
+Switch(config-vlan)# name Server_Farm
+Switch(config-vlan)# exit
+
+! Assign Access Ports to VLAN 10
+Switch(config)# interface range FastEthernet0/1 - 10
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 10
+Switch(config-if-range)# exit
+
+! Configure 802.1Q Trunk Link to Router
+Switch(config)# interface GigabitEthernet0/1
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20,30,99
+Switch(config-if)# no shutdown
+Switch(config-if)# exit</code></pre>
+          </div>
+        </article>
+
+        <!-- 03: Verification Matrix -->
+        <article class="doc-section">
+          <span class="doc-tag">03 // VERIFICATION RESULTS</span>
+          <h2 class="doc-heading">Ping Connectivity &amp; Packet Filtering Matrix</h2>
+
+          <div class="spec-table-wrapper">
+            <table class="spec-table">
+              <thead>
+                <tr>
+                  <th>Source Endpoint</th>
+                  <th>Destination Endpoint</th>
+                  <th>Observed Result</th>
+                  <th>Status</th>
+                  <th>Enforced Policy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>PC-Eng (192.168.10.15)</code></td>
+                  <td><code>PC-Eng (192.168.10.16)</code></td>
+                  <td><code>Reply from 192.168.10.16: bytes=32 time<1ms</code></td>
+                  <td><span style="color: var(--accent-green);">PERMITTED</span></td>
+                  <td>Intra-VLAN Layer-2 Switching</td>
+                </tr>
+                <tr>
+                  <td><code>PC-Eng (192.168.10.15)</code></td>
+                  <td><code>DB-Server (192.168.30.10)</code></td>
+                  <td><code>Reply from 192.168.30.10: bytes=32 time=2ms</code></td>
+                  <td><span style="color: var(--accent-green);">PERMITTED</span></td>
+                  <td>Routed via g0/0.10 &rarr; g0/0.30</td>
+                </tr>
+                <tr>
+                  <td><code>PC-Guest (192.168.20.5)</code></td>
+                  <td><code>DB-Server (192.168.30.10)</code></td>
+                  <td><code>Destination host unreachable / Dropped</code></td>
+                  <td><span style="color: var(--accent-red);">BLOCKED</span></td>
+                  <td>Extended ACL-101 Boundary Drop</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- 04: Key Competency Takeaways -->
+        <article class="doc-section">
+          <span class="doc-tag">04 // KEY COMPETENCY</span>
+          <h2 class="doc-heading">Engineering &amp; Security Takeaways</h2>
+          <div class="security-callout">
+            <div class="security-callout-title">
+              <i class="fa-solid fa-graduation-cap"></i> Core Competency Acquired
+            </div>
+            <p class="security-callout-text">
+              Demonstrated mastery of IEEE 802.1Q sub-interface encapsulation, understanding tag frame structure (TPID/TCI), sizing broadcast domains, and mitigating switch security threats such as CAM table overflow and VLAN hopping.
+            </p>
+          </div>
+        </article>
+
+        <div class="detail-actions-footer">
+          <a href="../index.html#labs" class="cyber-btn">
+            <i class="fa-solid fa-flask"></i> Return to Security Labs
+          </a>
+          <a href="../projects/vlan-network-design.html" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-diagram-project"></i> View Full Architecture Case Study
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>

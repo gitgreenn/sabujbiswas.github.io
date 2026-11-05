@@ -1,0 +1,166 @@
+/* ================= MILITARY-GRADE CYBER RETICLE CURSOR ================= */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
+@media (hover: none) and (pointer: coarse), (max-width: 992px) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: auto !important;
+  }
+  .cyber-cursor-dot,
+  .cyber-cursor-ring {
+    display: none !important;
+  }
+}
+
+.cyber-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 0 8px var(--accent-green), 0 0 14px var(--accent-green);
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  margin-top: -3px;
+  margin-left: -3px;
+  transition: opacity 0.2s ease;
+}
+
+.cyber-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 255, 136, 0.4);
+  pointer-events: none;
+  z-index: 99998;
+  margin-top: -18px;
+  margin-left: -18px;
+  transform: translate3d(-100px, -100px, 0);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              transform 0.05s linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reticle Corner Brackets */
+.reticle-corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: var(--accent-green);
+  pointer-events: none;
+  transition: border-color 0.2s ease;
+}
+
+.reticle-tl {
+  top: -2px;
+  left: -2px;
+  border-top: 1.5px solid var(--accent-green);
+  border-left: 1.5px solid var(--accent-green);
+}
+
+.reticle-tr {
+  top: -2px;
+  right: -2px;
+  border-top: 1.5px solid var(--accent-green);
+  border-right: 1.5px solid var(--accent-green);
+}
+
+.reticle-bl {
+  bottom: -2px;
+  left: -2px;
+  border-bottom: 1.5px solid var(--accent-green);
+  border-left: 1.5px solid var(--accent-green);
+}
+
+.reticle-br {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 1.5px solid var(--accent-green);
+  border-right: 1.5px solid var(--accent-green);
+}
+
+.reticle-label {
+  position: absolute;
+  bottom: -16px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  color: var(--accent-green);
+  opacity: 0.6;
+  pointer-events: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Reticle Locked State (Hovering interactives) */
+.cyber-cursor-ring.is-locked {
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  margin-left: -23px;
+  border: 1px solid var(--accent-green);
+  background: rgba(0, 255, 136, 0.06);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.25);
+  animation: reticleSpin 6s linear infinite;
+}
+
+.cyber-cursor-ring.is-locked .reticle-label {
+  opacity: 1;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 6px var(--accent-green);
+}
+
+@keyframes reticleSpin {
+  0% { transform: translate3d(var(--curr-x, 0), var(--curr-y, 0), 0) rotate(0deg); }
+  100% { transform: translate3d(var(--curr-x, 0), var(--curr-y, 0), 0) rotate(360deg); }
+}
+
+/* Clicking State */
+.cyber-cursor-ring.is-clicking {
+  transform: scale(0.85);
+  background: rgba(0, 255, 136, 0.2);
+  border-color: #fff;
+}
+
+/* Click Sonar Shockwave */
+.cyber-cursor-pulse {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent-green);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99997;
+  transform: translate(-50%, -50%);
+  animation: cursorShockwave 0.45s ease-out forwards;
+}
+
+@keyframes cursorShockwave {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 0.9;
+    border-color: var(--accent-green);
+  }
+  100% {
+    width: 68px;
+    height: 68px;
+    opacity: 0;
+    border-color: rgba(0, 255, 136, 0);
+  }
+}

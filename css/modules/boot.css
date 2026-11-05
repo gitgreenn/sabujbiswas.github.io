@@ -1,0 +1,101 @@
+/* ================= BOOT SCREEN ================= */
+.boot-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--bg-primary);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+  font-family: var(--font-mono);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.boot-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+}
+
+.boot-sys-name {
+  color: var(--accent-green);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
+}
+
+.boot-skip-btn {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.boot-skip-btn:hover {
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+  background: var(--accent-green-dim);
+}
+
+.boot-terminal-body {
+  flex: 1;
+  overflow-y: auto;
+  margin: 24px 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.boot-log-entry {
+  margin-bottom: 6px;
+}
+
+.boot-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+.boot-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.boot-progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.boot-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green-glow);
+  transition: width 0.15s ease-out;
+}
+
+.boot-percent {
+  color: var(--accent-green);
+  font-size: 0.88rem;
+  font-weight: 700;
+  min-width: 45px;
+}

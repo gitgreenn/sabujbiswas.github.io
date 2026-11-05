@@ -1,0 +1,19 @@
+{
+  "name": "sabuj-cyberspace-portfolio",
+  "version": "3.8.0",
+  "description": "Personal cybersecurity digital workspace & portfolio of Sabuj Biswas",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "dev": "node build.js --watch",
+    "verify": "node verify-subpages.js"
+  },
+  "keywords": [
+    "cybersecurity",
+    "portfolio",
+    "terminal",
+    "linux"
+  ],
+  "author": "Sabuj Biswas",
+  "license": "MIT"
+}

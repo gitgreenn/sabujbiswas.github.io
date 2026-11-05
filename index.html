@@ -19,6 +19,10 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
 
+  <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,662 +32,1176 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Modular CSS Architecture -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3.9.1">
   <link rel="stylesheet" href="css/terminal.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
 </head>
 
-<body class="booting">
+<body>
   <!-- Canvas Matrix Background -->
   <canvas id="matrixCanvas" aria-hidden="true"></canvas>
   <div class="cyber-grid-overlay" aria-hidden="true"></div>
   <div class="cyber-radial-glow" aria-hidden="true"></div>
   <div class="cyber-scanlines" aria-hidden="true"></div>
 
-  <!-- LINUX BOOT SEQUENCE (Optional / Accessible / Skippable) -->
-  <div class="boot-screen" id="bootScreen" role="dialog" aria-modal="true" aria-label="System Boot Sequence">
-    <div class="boot-header">
-      <span class="boot-sys-name">SABUJ // CYBERSPACE OS v3.8 [BOOT SEQUENCE]</span>
-      <button class="boot-skip-btn" id="skipBootBtn" aria-label="Skip initialization sequence">
-        Skip Boot [ESC]
-      </button>
-    </div>
-    <div class="boot-terminal-body" id="bootLogs"></div>
-    <div class="boot-footer">
-      <div class="boot-progress-wrapper">
-        <div class="boot-progress-track">
-          <div class="boot-progress-bar" id="bootProgressBar"></div>
-        </div>
-        <span class="boot-percent" id="bootPercent">0%</span>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN NAVIGATION -->
-  <header class="navbar-wrapper">
-    <div class="container">
-      <nav class="navbar" aria-label="Main Navigation">
-        <div class="nav-brand">
-          <a href="#hero" class="nav-logo">
-            <i class="fa-solid fa-terminal nav-logo-icon"></i>
-            <span>SABUJ<span class="term-accent">.SYS</span></span>
-          </a>
-          <div class="nav-status-pill" title="Security Status">
-            <span class="status-dot-pulse"></span>
-            <!-- <span>SYS_ONLINE // AES-256</span> -->
-          </div>
+<header class="navbar-wrapper">
+  <div class="container">
+    <nav class="navbar" aria-label="Main Navigation">
+      <div class="nav-brand">
+        <a href="#hero" class="nav-logo">
+          <i class="fa-solid fa-terminal nav-logo-icon"></i>
+          <span>SABUJ<span class="term-accent">.SYS</span></span>
+        </a>
+        <div class="nav-status-pill" title="Security Status">
+          <span class="status-dot-pulse"></span>
         </div>
+      </div>
 
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#hero" class="nav-link active">Home</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#terminal" class="nav-link">Terminal</a></li>
-          <li><a href="#skills" class="nav-link">Skills</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#labs" class="nav-link">Security Labs</a></li>
-          <li><a href="#writeups" class="nav-link">Write-ups</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#terminal" class="nav-link">Terminal</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#labs" class="nav-link">Security Labs</a></li>
+        <li><a href="#writeups" class="nav-link">Write-ups</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
 
-        <div class="nav-socials">
-          <!-- <button class="cyber-sfx-toggle" title="Toggle Synthesized Web Audio Sound Effects" aria-label="Toggle Synthesized Audio">
-            <i class="fa-solid fa-volume-high"></i>
-            <span class="sfx-status-text">SFX: OFF</span>
-          </button> -->
-          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="GitHub Profile" aria-label="GitHub Profile">
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="LinkedIn Profile" aria-label="LinkedIn Profile">
-            <i class="fa-brands fa-linkedin-in"></i>
-          </a>
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="navLinks">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </div>
-      </nav>
-    </div>
-  </header>
+      <div class="nav-socials">
+        <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="GitHub Profile" aria-label="GitHub Profile">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="nav-icon-link" title="LinkedIn Profile" aria-label="LinkedIn Profile">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="navLinks">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
 
   <main>
     <!-- HERO SECTION -->
-    <section class="hero-section" id="hero">
-      <div class="container">
-        <div class="hero-layout">
-          <!-- Left Column: Terminal Introduction -->
-          <div class="hero-terminal-card">
-            <div class="hero-prompt-line">
-              <span>root@cyberspace:~$</span>
-              <span class="hero-cmd" data-typewriter="whoami" data-type-delay="300">whoami</span>
-            </div>
-            
-            <h1 class="hero-name">
-              SABUJ <span class="hero-name-accent">BISWAS</span>
-            </h1>
+<section class="hero-section" id="hero">
+  <div class="container">
+    <div class="hero-layout">
+      <!-- Left Column: Terminal Introduction -->
+      <div class="hero-terminal-card">
+        <div class="hero-prompt-line">
+          <span>root@cyberspace:~$</span>
+          <span class="hero-cmd" data-typewriter="whoami" data-type-delay="300">whoami</span>
+        </div>
+        
+        <h1 class="hero-name">
+          SABUJ <span class="hero-name-accent">BISWAS</span>
+        </h1>
 
-            <div class="hero-role-badge">
-              <i class="fa-solid fa-shield-virus"></i> Cybersecurity Enthusiast
-            </div>
+        <div class="hero-role-badge">
+          <i class="fa-solid fa-shield-virus"></i> Cybersecurity Enthusiast
+        </div>
 
-            <p class="hero-intro">
-              B.Tech Computer Science &amp; Engineering scholar specializing in <strong>Cyber Security</strong> at <strong>The Neotia University</strong>. Architecting isolated network topologies, researching protocol vulnerabilities, and engineering security automation scripts in Linux environments.
-            </p>
+        <p class="hero-intro">
+          B.Tech Computer Science &amp; Engineering scholar specializing in <strong>Cyber Security</strong> at <strong>The Neotia University</strong>. Architecting isolated network topologies, researching protocol vulnerabilities, and engineering security automation scripts in Linux environments.
+        </p>
 
-            <div class="hero-skill-chips">
-              <span class="cyber-chip"><i class="fa-solid fa-network-wired"></i> Network Security</span>
-              <span class="cyber-chip"><i class="fa-solid fa-shield-halved"></i> Ethical Hacking</span>
-              <span class="cyber-chip"><i class="fa-brands fa-linux"></i> Linux Hardening</span>
-              <span class="cyber-chip"><i class="fa-brands fa-python"></i> Python Automation</span>
-            </div>
+        <div class="hero-skill-chips">
+          <span class="cyber-chip"><i class="fa-solid fa-network-wired"></i> Network Security</span>
+          <span class="cyber-chip"><i class="fa-solid fa-shield-halved"></i> Ethical Hacking</span>
+          <span class="cyber-chip"><i class="fa-brands fa-linux"></i> Linux Hardening</span>
+          <span class="cyber-chip"><i class="fa-brands fa-python"></i> Python Automation</span>
+        </div>
 
-            <div class="hero-cta-group">
-              <a href="#projects" class="cyber-btn">
-                <i class="fa-solid fa-folder-open"></i> Explore Projects
-              </a>
-              <a href="#terminal" class="cyber-btn cyber-btn-ghost">
-                <i class="fa-solid fa-terminal"></i> Launch Terminal
-              </a>
-              <a href="resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost">
-                <i class="fa-solid fa-file-arrow-down"></i> Resume [PDF]
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Column: System HUD Telemetry Card -->
-          <div class="hero-hud-card" id="heroTelemetryCard">
-            <div class="hud-header">
-              <span class="hud-title"><i class="fa-solid fa-microchip"></i> WORKSPACE TELEMETRY</span>
-              <button type="button" class="hud-badge-simulated" id="btnOpenHudFromHero" title="Click to open Cyber Control HUD">
-                <i class="fa-solid fa-sliders"></i> SIMULATED HUD [OPEN]
-              </button>
-            </div>
-
-            <div class="hud-specs-list">
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-regular fa-clock"></i> Local System Clock</span>
-                <span class="hud-value" id="dashLocalClock">--:--:-- LOCAL</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-stopwatch"></i> Session Uptime</span>
-                <span class="hud-value accent" id="dashUptime">00h:00m:00s</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-gauge-high"></i> Core CPU Allocation</span>
-                <span class="hud-value" id="dashCpuLoad">14% (Nominal)</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-network-wired"></i> Ping Latency</span>
-                <span class="hud-value accent" id="dashLatency">18ms (Verified)</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-shield"></i> Security Clearance</span>
-                <span class="hud-value cyan">LEVEL-3 RESEARCHER</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-graduation-cap"></i> University Degree</span>
-                <span class="hud-value">B.Tech CSE (Cyber)</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-chart-line"></i> Academic Score</span>
-                <span class="hud-value accent">7.9 CGPA (Class of 2026)</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-diagram-project"></i> Active Telemetry</span>
-                <span class="hud-value accent" id="telemetryPackets">1,420 pkts</span>
-              </div>
-              <div class="hud-spec-row">
-                <span class="hud-label"><i class="fa-solid fa-lock"></i> Channel Encryption</span>
-                <span class="hud-value accent">AES-256-GCM / TLS 1.3</span>
-              </div>
-            </div>
-
-            <button type="button" id="btnRunDiagnostics" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="width: 100%; margin-top: 16px;">
-              <i class="fa-solid fa-arrows-rotate"></i> Ping Live Telemetry Diagnostics
-            </button>
-          </div>
+        <div class="hero-cta-group">
+          <a href="#projects" class="cyber-btn">
+            <i class="fa-solid fa-folder-open"></i> Explore Projects
+          </a>
+          <a href="#terminal" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-terminal"></i> Launch Terminal
+          </a>
+          <a href="resume/resume.pdf" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-file-arrow-down"></i> Resume [PDF]
+          </a>
         </div>
       </div>
-    </section>
+
+      <!-- Right Column: System HUD Telemetry Card -->
+      <div class="hero-hud-card" id="heroTelemetryCard">
+        <div class="card-sheen"></div>
+        <div class="hud-header">
+          <span class="hud-title"><i class="fa-solid fa-microchip"></i> WORKSPACE TELEMETRY</span>
+          <button type="button" class="hud-badge-simulated" id="btnOpenHudFromHero" title="Click to open Cyber Control HUD">
+            <i class="fa-solid fa-sliders"></i> SIMULATED HUD [OPEN]
+          </button>
+        </div>
+
+        <div class="hud-specs-list">
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-regular fa-clock"></i> Local System Clock</span>
+            <span class="hud-value" id="dashLocalClock">--:--:-- LOCAL</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-stopwatch"></i> Session Uptime</span>
+            <span class="hud-value accent" id="dashUptime">00h:00m:00s</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-gauge-high"></i> Core CPU Allocation</span>
+            <span class="hud-value" id="dashCpuLoad">14% (Nominal)</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-network-wired"></i> Ping Latency</span>
+            <span class="hud-value accent" id="dashLatency">18ms (Verified)</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-shield"></i> Security Clearance</span>
+            <span class="hud-value cyan">LEVEL-3 RESEARCHER</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-graduation-cap"></i> University Degree</span>
+            <span class="hud-value">B.Tech CSE (Cyber)</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-chart-line"></i> Academic Score</span>
+            <span class="hud-value accent">7.9 CGPA (Class of 2026)</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-diagram-project"></i> Active Telemetry</span>
+            <span class="hud-value accent" id="telemetryPackets">1,420 pkts</span>
+          </div>
+          <div class="hud-spec-row">
+            <span class="hud-label"><i class="fa-solid fa-lock"></i> Channel Encryption</span>
+            <span class="hud-value accent">AES-256-GCM / TLS 1.3</span>
+          </div>
+        </div>
+
+        <button type="button" id="btnRunDiagnostics" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="width: 100%; margin-top: 16px;">
+          <i class="fa-solid fa-arrows-rotate"></i> Ping Live Telemetry Diagnostics
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- INTERACTIVE TERMINAL SECTION -->
-    <section class="section-wrapper terminal-section" id="terminal">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-terminal"></i> Command Line Interface</span>
-          <h2 class="section-title">Interactive Terminal Workspace</h2>
-          <p class="section-subtitle">
-            An interactive Linux shell simulator. Execute commands to query credentials, projects, certifications, and system telemetry.
-          </p>
-        </div>
+<section class="section-wrapper terminal-section" id="terminal">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-terminal"></i> Command Line Interface</span>
+      <h2 class="section-title">Interactive Terminal Workspace</h2>
+      <p class="section-subtitle">
+        An interactive Linux shell simulator. Execute commands to query credentials, projects, certifications, and system telemetry.
+      </p>
+    </div>
 
-        <div class="terminal-header-controls cyber-reveal">
-          <div class="terminal-quick-chips">
-            <span class="quick-chip-label">Quick Commands:</span>
-            <button class="term-quick-btn" data-cmd="help">help</button>
-            <button class="term-quick-btn" data-cmd="whoami">whoami</button>
-            <button class="term-quick-btn" data-cmd="neofetch">neofetch</button>
-            <button class="term-quick-btn" data-cmd="skills">skills</button>
-            <button class="term-quick-btn" data-cmd="projects">projects</button>
-            <button class="term-quick-btn" data-cmd="education">education</button>
-            <button class="term-quick-btn" data-cmd="certifications">certifications</button>
-            <button class="term-quick-btn" data-cmd="clear">clear</button>
-          </div>
-        </div>
-
-        <div class="terminal-window cyber-reveal" id="terminalWindow">
-          <div class="terminal-titlebar">
-            <div class="terminal-controls">
-              <button class="term-btn-ctrl ctrl-close" id="termBtnClose" title="Reset Terminal Buffer" aria-label="Reset Terminal Buffer"></button>
-              <button class="term-btn-ctrl ctrl-min" id="termBtnMin" title="Minimize / Restore Terminal" aria-label="Minimize or Restore Terminal"></button>
-              <button class="term-btn-ctrl ctrl-max" id="termBtnMax" title="Maximize Terminal Window" aria-label="Maximize Terminal Window"></button>
-            </div>
-            <div class="terminal-title">
-              <i class="fa-solid fa-terminal"></i>
-              <span>sabuj@cyberspace:~ (bash 5.2)</span>
-            </div>
-            <div class="terminal-session-status">SANDBOXED // SAFE DOM</div>
-          </div>
-
-          <div class="terminal-viewport" id="terminalOutput" role="log" aria-live="polite"></div>
-
-          <div class="terminal-input-bar">
-            <span class="term-prompt-active" id="terminalPrompt">sabuj@cyberspace:~$</span>
-            <input type="text" class="terminal-input-field" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type a command (try 'help' or 'neofetch')..." aria-label="Terminal Command Input">
-          </div>
-        </div>
+    <div class="terminal-header-controls cyber-reveal">
+      <div class="terminal-quick-chips">
+        <span class="quick-chip-label">Quick Commands:</span>
+        <button class="term-quick-btn" data-cmd="help">help</button>
+        <button class="term-quick-btn" data-cmd="whoami">whoami</button>
+        <button class="term-quick-btn" data-cmd="neofetch">neofetch</button>
+        <button class="term-quick-btn" data-cmd="skills">skills</button>
+        <button class="term-quick-btn" data-cmd="projects">projects</button>
+        <button class="term-quick-btn" data-cmd="education">education</button>
+        <button class="term-quick-btn" data-cmd="certifications">certifications</button>
+        <button class="term-quick-btn" data-cmd="clear">clear</button>
       </div>
-    </section>
+    </div>
+
+    <div class="terminal-window cyber-reveal" id="terminalWindow">
+      <div class="terminal-titlebar">
+        <div class="terminal-controls">
+          <button class="term-btn-ctrl ctrl-close" id="termBtnClose" title="Reset Terminal Buffer" aria-label="Reset Terminal Buffer"></button>
+          <button class="term-btn-ctrl ctrl-min" id="termBtnMin" title="Minimize / Restore Terminal" aria-label="Minimize or Restore Terminal"></button>
+          <button class="term-btn-ctrl ctrl-max" id="termBtnMax" title="Maximize Terminal Window" aria-label="Maximize Terminal Window"></button>
+        </div>
+        <div class="terminal-title">
+          <i class="fa-solid fa-terminal"></i>
+          <span>sabuj@cyberspace:~ (bash 5.2)</span>
+        </div>
+        <div class="terminal-session-status">SANDBOXED // SAFE DOM</div>
+      </div>
+
+      <div class="terminal-viewport" id="terminalOutput" role="log" aria-live="polite"></div>
+
+      <div class="terminal-input-bar">
+        <span class="term-prompt-active" id="terminalPrompt">sabuj@cyberspace:~$</span>
+        <input type="text" class="terminal-input-field" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type a command (try 'help' or 'neofetch')..." aria-label="Terminal Command Input">
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- ABOUT SECTION -->
-    <section class="section-wrapper" id="about">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-user-shield"></i> Profile &amp; Journey</span>
-          <h2 class="section-title">About Sabuj Biswas</h2>
-        </div>
+<section class="section-wrapper" id="about">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-user-shield"></i> Profile &amp; Journey</span>
+      <h2 class="section-title">About Sabuj Biswas</h2>
+    </div>
 
-        <div class="about-grid">
-          <!-- Left: Narrative -->
-          <div class="about-narrative-card cyber-reveal">
-            <p class="about-lead">
-              A computer science engineer with a dedicated focus on <strong>Cyber Security, Network Defense, and Systems Programming</strong>.
-            </p>
-            <p class="about-text">
-              My engineering philosophy revolves around understanding systems from the lowest packet layer upwards. Whether configuring complex multi-department VLAN architectures in Cisco Packet Tracer, auditing Linux system privileges, or building machine learning components from pure mathematics, I focus on deterministic logic, reliability, and security-first engineering.
-            </p>
-            <div class="about-objectives-box">
-              <div class="about-obj-title"><i class="fa-solid fa-crosshairs"></i> Strategic Career Objective</div>
-              <p class="about-obj-text">
-                Targeting roles in <strong>Network Engineering, Security Operations (SOC), Linux Administration</strong>, and technical security analysis where rigor, packet-level precision, and continuous learning create measurable defensive value.
-              </p>
+    <div class="about-grid">
+      <!-- Left: Narrative -->
+      <div class="about-narrative-card cyber-reveal">
+        <p class="about-lead">
+          A computer science engineer with a dedicated focus on <strong>Cyber Security, Network Defense, and Systems Programming</strong>.
+        </p>
+        <p class="about-text">
+          My engineering philosophy revolves around understanding systems from the lowest packet layer upwards. Whether configuring complex multi-department VLAN architectures in Cisco Packet Tracer, auditing Linux system privileges, or building machine learning components from pure mathematics, I focus on deterministic logic, reliability, and security-first engineering.
+        </p>
+        <div class="about-objectives-box">
+          <div class="about-obj-title"><i class="fa-solid fa-crosshairs"></i> Strategic Career Objective</div>
+          <p class="about-obj-text">
+            Targeting roles in <strong>Network Engineering, Security Operations (SOC), Linux Administration</strong>, and technical security analysis where rigor, packet-level precision, and continuous learning create measurable defensive value.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Education Card -->
+      <div class="education-card cyber-reveal">
+        <div>
+          <div class="edu-header">
+            <div class="edu-icon-circle">
+              <i class="fa-solid fa-university"></i>
+            </div>
+            <div>
+              <h3 class="edu-institution">The Neotia University</h3>
+              <div class="edu-degree">B.Tech in Computer Science and Engineering</div>
             </div>
           </div>
+          <p class="edu-specialization">
+            <strong>Academic Specialization:</strong> Cyber Security
+          </p>
+        </div>
 
-          <!-- Right: Education Card -->
-          <div class="education-card cyber-reveal">
-            <div>
-              <div class="edu-header">
-                <div class="edu-icon-circle">
-                  <i class="fa-solid fa-university"></i>
-                </div>
-                <div>
-                  <h3 class="edu-institution">The Neotia University</h3>
-                  <div class="edu-degree">B.Tech in Computer Science and Engineering</div>
-                </div>
-              </div>
-              <p class="edu-specialization">
-                <strong>Academic Specialization:</strong> Cyber Security
-              </p>
-            </div>
-
-            <div class="edu-stats-grid">
-              <div class="edu-stat-item">
-                <span class="edu-stat-label">Graduation Year</span>
-                <span class="edu-stat-val">2026</span>
-              </div>
-              <div class="edu-stat-item">
-                <span class="edu-stat-label">Cumulative GPA</span>
-                <span class="edu-stat-val">7.9 / 10.0</span>
-              </div>
-            </div>
+        <div class="edu-stats-grid">
+          <div class="edu-stat-item">
+            <span class="edu-stat-label">Graduation Year</span>
+            <span class="edu-stat-val">2026</span>
+          </div>
+          <div class="edu-stat-item">
+            <span class="edu-stat-label">Cumulative GPA</span>
+            <span class="edu-stat-val">7.9 / 10.0</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- TECHNICAL SKILLS SECTION -->
-    <section class="section-wrapper" id="skills">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-shield-halved"></i> Capabilities Matrix</span>
-          <h2 class="section-title">Technical Skills &amp; Domains</h2>
-          <p class="section-subtitle">
-            Categorized technical proficiencies structured across programming, networking, defensive cybersecurity, and professional engineering tools.
-          </p>
+<section class="section-wrapper" id="skills">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-shield-halved"></i> Capabilities Matrix</span>
+      <h2 class="section-title">Technical Skills &amp; Domains</h2>
+      <p class="section-subtitle">
+        Categorized technical proficiencies structured across programming, networking, defensive cybersecurity, and professional engineering tools.
+      </p>
+    </div>
+
+    <div class="skills-categories-grid">
+      <!-- Programming Card -->
+      <div class="skill-category-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="category-header">
+          <i class="fa-solid fa-code"></i>
+          <h3 class="category-title">Programming &amp; Scripting</h3>
         </div>
-
-        <div class="skills-categories-grid">
-          <!-- Programming -->
-          <div class="skill-category-card cyber-reveal">
-            <div class="category-header">
-              <i class="fa-solid fa-code"></i>
-              <h3 class="category-title">Programming &amp; Scripting</h3>
+        <div class="skills-list" id="skillsProgramming">
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name"><i class="fa-brands fa-python"></i> Python</span>
+              <span class="skill-level">Core Scripting &amp; Automation</span>
             </div>
-            <div class="skills-list" id="skillsProgramming"></div>
           </div>
-
-          <!-- Networking -->
-          <div class="skill-category-card cyber-reveal">
-            <div class="category-header">
-              <i class="fa-solid fa-network-wired"></i>
-              <h3 class="category-title">Networking &amp; Routing</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name"><i class="fa-solid fa-code"></i> C</span>
+              <span class="skill-level">Systems &amp; Memory Basics</span>
             </div>
-            <div class="skills-list" id="skillsNetworking"></div>
           </div>
-
-          <!-- Cybersecurity -->
-          <div class="skill-category-card cyber-reveal">
-            <div class="category-header">
-              <i class="fa-solid fa-user-shield"></i>
-              <h3 class="category-title">Cybersecurity Fundamentals</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name"><i class="fa-brands fa-html5"></i> HTML5</span>
+              <span class="skill-level">Semantic Web Structure</span>
             </div>
-            <div class="skills-list" id="skillsCybersecurity"></div>
           </div>
-
-          <!-- Tools & Environment -->
-          <div class="skill-category-card cyber-reveal">
-            <div class="category-header">
-              <i class="fa-solid fa-toolbox"></i>
-              <h3 class="category-title">Tools &amp; Environments</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+              <span class="skill-level">Modern Responsive Layouts</span>
             </div>
-            <div class="tools-flex-grid" id="skillsTools"></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name"><i class="fa-brands fa-js"></i> JavaScript</span>
+              <span class="skill-level">ES6+ DOM &amp; Async Operations</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <!-- Networking Card -->
+      <div class="skill-category-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="category-header">
+          <i class="fa-solid fa-network-wired"></i>
+          <h3 class="category-title">Networking &amp; Routing</h3>
+        </div>
+        <div class="skills-list" id="skillsNetworking">
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">TCP/IP Protocol Suite</span>
+              <span class="skill-level">Layered architecture, packet inspection</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">LAN &amp; Switching</span>
+              <span class="skill-level">Switch architecture, MAC tables, broadcast domains</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">VLAN Segmentation</span>
+              <span class="skill-level">802.1Q encapsulation, access/trunk ports</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Routing &amp; Subnetting</span>
+              <span class="skill-level">IPv4/IPv6 CIDR, static routing, gateways</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Inter-VLAN Routing</span>
+              <span class="skill-level">Router-on-a-Stick (ROAS) and L3 SVI routing</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Firewall Configuration</span>
+              <span class="skill-level">Stateful inspection, perimeter defense</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Access Control Lists (ACL)</span>
+              <span class="skill-level">Standard &amp; extended ACL packet filters</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">NAT &amp; PAT</span>
+              <span class="skill-level">Address translation, port forwarding</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cybersecurity Card -->
+      <div class="skill-category-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="category-header">
+          <i class="fa-solid fa-user-shield"></i>
+          <h3 class="category-title">Cybersecurity Fundamentals</h3>
+        </div>
+        <div class="skills-list" id="skillsCybersecurity">
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Network Security</span>
+              <span class="skill-level">Traffic analysis, packet sniffing, intrusion defense</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Linux Security</span>
+              <span class="skill-level">Permissions, sudo segregation, iptables, SSH</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Ethical Hacking Fundamentals</span>
+              <span class="skill-level">Reconnaissance, port mapping, vulnerability auditing</span>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Web Security Fundamentals</span>
+              <span class="skill-level">OWASP Top 10 awareness: SQLi, XSS, CSRF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools & Environment Card -->
+      <div class="skill-category-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="category-header">
+          <i class="fa-solid fa-toolbox"></i>
+          <h3 class="category-title">Tools &amp; Environments</h3>
+        </div>
+        <div class="tools-flex-grid" id="skillsTools">
+          <div class="tool-badge">
+            <i class="fa-solid fa-network-wired"></i>
+            <div>
+              <span class="tool-name">Cisco Packet Tracer</span>
+              <span class="tool-sub">Network Simulation</span>
+            </div>
+          </div>
+          <div class="tool-badge">
+            <i class="fa-brands fa-git-alt"></i>
+            <div>
+              <span class="tool-name">Git &amp; GitHub</span>
+              <span class="tool-sub">Version Control</span>
+            </div>
+          </div>
+          <div class="tool-badge">
+            <i class="fa-solid fa-code"></i>
+            <div>
+              <span class="tool-name">VS Code</span>
+              <span class="tool-sub">Primary IDE</span>
+            </div>
+          </div>
+          <div class="tool-badge">
+            <i class="fa-brands fa-linux"></i>
+            <div>
+              <span class="tool-name">Linux (Ubuntu / Kali)</span>
+              <span class="tool-sub">CLI &amp; Hardening</span>
+            </div>
+          </div>
+          <div class="tool-badge">
+            <i class="fa-brands fa-windows"></i>
+            <div>
+              <span class="tool-name">Windows</span>
+              <span class="tool-sub">Enterprise Client OS</span>
+            </div>
+          </div>
+          <div class="tool-badge">
+            <i class="fa-solid fa-database"></i>
+            <div>
+              <span class="tool-name">MySQL / SQLite</span>
+              <span class="tool-sub">Relational DBMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- PROJECTS SECTION -->
-    <section class="section-wrapper" id="projects">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-folder-open"></i> Engineering Works</span>
-          <h2 class="section-title">Featured Technical Projects</h2>
-          <p class="section-subtitle">
-            Practical implementations across network architecture, computer vision automation, and algorithmic machine learning research.
-          </p>
+<section class="section-wrapper" id="projects">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-folder-open"></i> Engineering Works</span>
+      <h2 class="section-title">Featured Technical Projects</h2>
+      <p class="section-subtitle">
+        Practical implementations across network architecture, computer vision automation, and algorithmic machine learning research.
+      </p>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- PROJECT 1 -->
+      <article class="project-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="project-card-thumb">
+          <img src="assets/images/vlan-topology.svg" alt="Enterprise Inter-VLAN Network Design Blueprint" class="project-thumb-img" loading="lazy">
+          <span class="project-thumb-overlay"><i class="fa-solid fa-diagram-project"></i> ARCH-BLUEPRINT</span>
+        </div>
+        <div class="project-card-header">
+          <span class="project-index">01 // SYS.PROJ</span>
+          <span class="cyber-tag">NETWORK INFRASTRUCTURE</span>
+        </div>
+        <h3 class="project-title">Enterprise Inter-VLAN Network Design</h3>
+        <p class="project-summary">Designed and verified a multi-department enterprise network using Cisco Packet Tracer. Built with IEEE 802.1Q trunking, Router-on-a-Stick (ROAS), DHCP pools, and security filtering using Extended ACLs.</p>
+        
+        <div class="project-tech-stack">
+          <span class="tech-badge">Cisco Packet Tracer</span>
+          <span class="tech-badge">VLAN</span>
+          <span class="tech-badge">802.1Q Trunking</span>
+          <span class="tech-badge">Inter-VLAN Routing</span>
+          <span class="tech-badge">Extended ACL</span>
+          <span class="tech-badge">DHCP</span>
         </div>
 
-        <div class="projects-grid" id="projectsGrid"></div>
-      </div>
-    </section>
+        <div class="project-card-actions">
+          <button class="cyber-btn cyber-btn-sm btn-project-detail" data-project-id="project-vlan">
+            <i class="fa-solid fa-terminal"></i> Deep Dive
+          </button>
+          <a href="projects/vlan-network-design.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Full Technical Case Study">
+            <i class="fa-solid fa-file-lines"></i> Case Study
+          </a>
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Source on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 2 -->
+      <article class="project-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="project-card-thumb">
+          <img src="assets/images/face-pipeline.svg" alt="Face Recognition Attendance System Blueprint" class="project-thumb-img" loading="lazy">
+          <span class="project-thumb-overlay"><i class="fa-solid fa-diagram-project"></i> ARCH-BLUEPRINT</span>
+        </div>
+        <div class="project-card-header">
+          <span class="project-index">02 // SYS.PROJ</span>
+          <span class="cyber-tag">COMPUTER VISION &amp; AUTOMATION</span>
+        </div>
+        <h3 class="project-title">Face Recognition Attendance System</h3>
+        <p class="project-summary">Built an automated biometric attendance manager combining real-time Haar Cascade facial detection, OpenCV preprocessing, and SQLite persistence. Features student profile enrollment and tamper-resistant CSV logging.</p>
+        
+        <div class="project-tech-stack">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">OpenCV</span>
+          <span class="tech-badge">Tkinter</span>
+          <span class="tech-badge">SQLite</span>
+          <span class="tech-badge">NumPy</span>
+          <span class="tech-badge">CSV Logging</span>
+        </div>
+
+        <div class="project-card-actions">
+          <button class="cyber-btn cyber-btn-sm btn-project-detail" data-project-id="project-face">
+            <i class="fa-solid fa-terminal"></i> Deep Dive
+          </button>
+          <a href="projects/face-recognition-attendance.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Full Technical Case Study">
+            <i class="fa-solid fa-file-lines"></i> Case Study
+          </a>
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Source on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 3 -->
+      <article class="project-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="project-card-thumb">
+          <img src="assets/images/myllm-transformer.svg" alt="MyLLM — Personal Language Model Blueprint" class="project-thumb-img" loading="lazy">
+          <span class="project-thumb-overlay"><i class="fa-solid fa-diagram-project"></i> ARCH-BLUEPRINT</span>
+        </div>
+        <div class="project-card-header">
+          <span class="project-index">03 // SYS.PROJ</span>
+          <span class="cyber-tag">AI &amp; MACHINE LEARNING RESEARCH</span>
+        </div>
+        <h3 class="project-title">MyLLM — Personal Language Model</h3>
+        <p class="project-summary">A foundational deep-learning research project exploring the mathematical and architectural building blocks of transformer-based LLMs from scratch: Byte-Pair Encoding, Scaled Dot-Product Attention, causal masking, and cross-entropy loss calculation.</p>
+        
+        <div class="project-tech-stack">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">PyTorch</span>
+          <span class="tech-badge">NumPy</span>
+          <span class="tech-badge">Transformers</span>
+          <span class="tech-badge">NLP</span>
+          <span class="tech-badge">Tokenization</span>
+        </div>
+
+        <div class="project-card-actions">
+          <button class="cyber-btn cyber-btn-sm btn-project-detail" data-project-id="project-myllm">
+            <i class="fa-solid fa-terminal"></i> Deep Dive
+          </button>
+          <a href="projects/myllm-language-model.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Full Technical Case Study">
+            <i class="fa-solid fa-file-lines"></i> Case Study
+          </a>
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Source on GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
     <!-- SECURITY LABS SECTION -->
-    <section class="section-wrapper" id="labs">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-flask-vial"></i> Experimental Research</span>
-          <h2 class="section-title">Security &amp; Networking Labs</h2>
-          <p class="section-subtitle">
-            Hands-on technical laboratory simulations, firewall ruleset configurations, and systems hardening exercises.
-          </p>
+<section class="section-wrapper" id="labs">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-flask-vial"></i> Experimental Research</span>
+      <h2 class="section-title">Security &amp; Networking Labs</h2>
+      <p class="section-subtitle">
+        Hands-on technical laboratory simulations, firewall ruleset configurations, and systems hardening exercises.
+      </p>
+    </div>
+
+    <div class="labs-grid" id="securityLabsGrid">
+      <!-- Lab 1 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Network Security</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
         </div>
-
-        <div class="labs-grid" id="securityLabsGrid"></div>
-
-        <!-- Interactive Hands-on Security Workbench -->
-        <div class="sim-workbench-card cyber-reveal">
-          <div class="sim-workbench-header">
-            <h3 class="sim-workbench-title">
-              <i class="fa-solid fa-microchip"></i> Interactive Lab Simulation Workbench
-            </h3>
-            <span class="cyber-tag">LIVE TESTING SANDBOX</span>
-          </div>
-
-          <div class="sim-grid-two-col">
-            <!-- Port Scanner Simulator -->
-            <div class="sim-subcard">
-              <div>
-                <h4 class="sim-subcard-title">
-                  <i class="fa-solid fa-radar"></i> Stealth SYN Port Scanner
-                </h4>
-                <p class="sim-subcard-desc">
-                  Simulate raw socket SYN reconnaissance against target IP to observe open ports, service banners, and firewall dropping.
-                </p>
-                <div class="sim-input-row">
-                  <input type="text" id="scanTargetInput" class="sim-input-field" value="192.168.10.1" placeholder="Target Host / IP..." aria-label="Port Scanner Target Host">
-                  <button type="button" id="btnRunPortScan" class="cyber-btn cyber-btn-sm">
-                    <i class="fa-solid fa-play"></i> Run SYN Scan
-                  </button>
-                </div>
-                <div class="sim-progress-track">
-                  <div class="sim-progress-fill" id="scannerProgress"></div>
-                </div>
-              </div>
-              <div class="sim-log-window" id="scannerLogOutput" role="log" aria-live="polite">
-                <div class="sim-log-line term-muted">Click 'Run SYN Scan' to initiate port reconnaissance simulation...</div>
-              </div>
-            </div>
-
-            <!-- VLAN Router-on-a-Stick Packet Flow Simulator -->
-            <div class="sim-subcard">
-              <div>
-                <h4 class="sim-subcard-title">
-                  <i class="fa-solid fa-network-wired"></i> VLAN 802.1Q &amp; ACL Packet Router
-                </h4>
-                <p class="sim-subcard-desc">
-                  Test Inter-VLAN sub-interface routing policies and evaluate Extended ACL-101 packet filtering rules.
-                </p>
-                <div class="sim-input-row">
-                  <select id="vlanSrcSelect" class="sim-select-field" aria-label="Source VLAN Network">
-                    <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
-                    <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
-                    <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
-                  </select>
-                  <select id="vlanDstSelect" class="sim-select-field" aria-label="Destination VLAN Network">
-                    <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
-                    <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
-                    <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
-                  </select>
-                </div>
-                <button type="button" id="btnDispatchPacket" class="cyber-btn cyber-btn-sm" style="width: 100%;">
-                  <i class="fa-solid fa-paper-plane"></i> Dispatch 802.1Q Packet Through Router
-                </button>
-              </div>
-              <div id="vlanResultStatus" class="vlan-result-box vlan-idle">
-                <i class="fa-solid fa-circle-info"></i> Select source/destination VLAN and dispatch test packet to verify routing &amp; ACL boundaries.
-              </div>
-            </div>
-          </div>
+        <h4 class="lab-title">Inter-VLAN Routing &amp; Subnet Hardening</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Cisco Packet Tracer / GNS3</code></p>
+        <p class="lab-obj">Isolate broadcast domains, configure 802.1Q trunking, and restrict unauthorized inter-subnet traversal with ACL rulesets.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Subnetting calculations, router sub-interfaces, encapsulation dot1q, packet filtering policies.</p>
         </div>
+        <a href="labs/inter-vlan-routing.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
       </div>
-    </section>
 
-    <!-- CERTIFICATIONS SECTION -->
-    <section class="section-wrapper" id="certifications">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-certificate"></i> Verified Credentials</span>
-          <h2 class="section-title">Certifications &amp; Academics</h2>
-          <p class="section-subtitle">
-            Formal collegiate coursework and industry networking curriculum credentials.
-          </p>
+      <!-- Lab 2 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Firewall Defense</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
         </div>
-
-        <div class="certs-grid" id="certificationsGrid"></div>
+        <h4 class="lab-title">Firewall Configuration &amp; Perimeter Filtering</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Cisco IOS / Linux iptables</code></p>
+        <p class="lab-obj">Establish ingress/egress filtering rules to drop spoofed IP ranges, mitigate ICMP flood vectors, and control port access.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Stateful inspection concepts, directionality of ACL application (in vs out), standard vs extended syntax.</p>
+        </div>
+        <a href="labs/firewall-perimeter-filtering.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
       </div>
-    </section>
 
-    <!-- SECURITY WRITE-UPS SECTION -->
-    <section class="section-wrapper" id="writeups">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-book-bookmark"></i> Technical Documentation</span>
-          <h2 class="section-title">Security Write-ups &amp; Notes</h2>
-          <p class="section-subtitle">
-            Technical breakdowns covering enterprise network segmentation, Linux defense mechanisms, and foundational ML mechanics.
-          </p>
+      <!-- Lab 3 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Linux Administration</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
         </div>
-
-        <div class="writeups-grid" id="writeupsGrid"></div>
+        <h4 class="lab-title">Linux Server Hardening &amp; User Privilege Auditing</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Ubuntu / Debian LTS / Kali Linux</code></p>
+        <p class="lab-obj">Harden a fresh Linux server: SSH key-only authentication, fail2ban setup, disabling root login, and strict file permissions.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>chmod/chown octal permissions, sudoers configuration, auditd, systemd service management.</p>
+        </div>
+        <a href="labs/linux-server-hardening.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
       </div>
-    </section>
 
-    <!-- CONTACT SECTION -->
-    <section class="section-wrapper" id="contact">
-      <div class="container">
-        <div class="section-header cyber-reveal">
-          <span class="section-tag"><i class="fa-solid fa-envelope-open-text"></i> Secure Comms</span>
-          <h2 class="section-title">Initiate Contact</h2>
-          <p class="section-subtitle">
-            Reach out for technical collaborations, security research inquiries, or professional opportunities.
-          </p>
+      <!-- Lab 4 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Security Automation</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
         </div>
+        <h4 class="lab-title">Python Port Scanner &amp; Socket Reconnaissance</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Python 3 / Raw Sockets / Scapy</code></p>
+        <p class="lab-obj">Write a multi-threaded socket script to identify open ports, banner grab active services, and measure latency across target IPs.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Socket programming, TCP SYN/ACK handshake dynamics, thread synchronization, error handling.</p>
+        </div>
+        <a href="labs/python-port-scanner.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
 
-        <div class="contact-layout">
-          <!-- Left: Direct Channels -->
-          <div class="contact-info-card cyber-reveal">
-            <h3 class="contact-headline">Direct Communication Channels</h3>
-            <p class="contact-text">
-              Direct email and verified social directory for Sabuj Biswas. Feel free to copy my direct email or connect through LinkedIn.
+      <!-- Lab 5 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Web Security</span>
+          <span class="lab-status-badge status-progress">
+            <span class="status-dot"></span> IN RESEARCH
+          </span>
+        </div>
+        <h4 class="lab-title">Web Security: OWASP Top 10 Hands-on Testing</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>OWASP Juice Shop / DVWA</code></p>
+        <p class="lab-obj">Analyze common application-layer security vulnerabilities including SQL Injection, Cross-Site Scripting (XSS), and insecure direct object references.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>HTTP request tampering, input sanitization defense, CSRF token validation, parameterized SQL queries.</p>
+        </div>
+        <a href="labs/owasp-web-testing.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 6 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Traffic Analysis</span>
+          <span class="lab-status-badge status-progress">
+            <span class="status-dot"></span> IN RESEARCH
+          </span>
+        </div>
+        <h4 class="lab-title">Network Packet Analysis &amp; Protocol Inspection</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Wireshark / tcpdump</code></p>
+        <p class="lab-obj">Capture live promiscuous network traffic to examine ARP requests, DNS queries, and cleartext transmission risks.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Pcap parsing, packet payload inspection, analyzing SSL/TLS handshakes.</p>
+        </div>
+        <a href="labs/packet-analysis-wireshark.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+    </div>
+
+    <!-- Interactive Hands-on Security Workbench -->
+    <div class="sim-workbench-card cyber-reveal">
+      <div class="card-sheen"></div>
+      <div class="sim-workbench-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <canvas id="radarSweepCanvas" width="44" height="44" class="radar-mini-sweep" title="Active Perimeter Radar"></canvas>
+          <h3 class="sim-workbench-title">
+            <i class="fa-solid fa-microchip"></i> Interactive Lab Simulation Workbench
+          </h3>
+        </div>
+        <span class="cyber-tag">LIVE TESTING SANDBOX</span>
+      </div>
+
+      <div class="sim-grid-two-col">
+        <!-- Port Scanner Simulator -->
+        <div class="sim-subcard">
+          <div>
+            <h4 class="sim-subcard-title">
+              <i class="fa-solid fa-radar"></i> Stealth SYN Port Scanner
+            </h4>
+            <p class="sim-subcard-desc">
+              Simulate raw socket SYN reconnaissance against target IP to observe open ports, service banners, and firewall dropping.
             </p>
-
-            <div class="contact-channel-list">
-              <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
-                <i class="fa-brands fa-linkedin-in"></i>
-                <div>
-                  <span class="channel-label">LinkedIn Profile</span>
-                  <span class="channel-val">linkedin.com/in/sabujbiswas-link/</span>
-                </div>
-              </a>
-
-              <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
-                <i class="fa-brands fa-github"></i>
-                <div>
-                  <span class="channel-label">GitHub Repository</span>
-                  <span class="channel-val">github.com/gitcolon-Sabuj</span>
-                </div>
-              </a>
-
-              <div class="contact-channel-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <div>
-                  <span class="channel-label">Base Location</span>
-                  <span class="channel-val">Kolkata, India</span>
-                </div>
-              </div>
+            <div class="sim-input-row">
+              <input type="text" id="scanTargetInput" class="sim-input-field" value="192.168.10.1" placeholder="Target Host / IP..." aria-label="Port Scanner Target Host">
+              <button type="button" id="btnRunPortScan" class="cyber-btn cyber-btn-sm">
+                <i class="fa-solid fa-play"></i> Run SYN Scan
+              </button>
             </div>
+            <div class="sim-progress-track">
+              <div class="sim-progress-fill" id="scannerProgress"></div>
+            </div>
+          </div>
+          <div class="sim-log-window" id="scannerLogOutput" role="log" aria-live="polite">
+            <div class="sim-log-line term-muted">Click 'Run SYN Scan' to initiate port reconnaissance simulation...</div>
+          </div>
+        </div>
 
-            <button class="cyber-btn btn-copy-email" type="button">
-              <i class="fa-solid fa-copy"></i> Copy Direct Email Address
+        <!-- VLAN Router-on-a-Stick Packet Flow Simulator -->
+        <div class="sim-subcard">
+          <div>
+            <h4 class="sim-subcard-title">
+              <i class="fa-solid fa-network-wired"></i> VLAN 802.1Q &amp; ACL Packet Router
+            </h4>
+            <p class="sim-subcard-desc">
+              Test Inter-VLAN sub-interface routing policies and evaluate Extended ACL-101 packet filtering rules.
+            </p>
+            <div class="sim-input-row">
+              <select id="vlanSrcSelect" class="sim-select-field" aria-label="Source VLAN Network">
+                <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+                <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+              </select>
+              <select id="vlanDstSelect" class="sim-select-field" aria-label="Destination VLAN Network">
+                <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+                <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+              </select>
+            </div>
+            <button type="button" id="btnDispatchPacket" class="cyber-btn cyber-btn-sm" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Dispatch 802.1Q Packet Through Router
             </button>
           </div>
-
-          <!-- Right: Interactive Form -->
-          <div class="contact-form-card cyber-reveal">
-            <h3 class="form-title"><i class="fa-solid fa-paper-plane"></i> Dispatch Encrypted Inquiry</h3>
-            
-            <form class="contact-form" id="contactForm" novalidate>
-              <div class="form-group">
-                <label for="formName" class="form-label">Operator / Sender Name *</label>
-                <input type="text" id="formName" name="name" class="form-input" placeholder="e.g. Alex Vance" required>
-              </div>
-
-              <div class="form-group">
-                <label for="formEmail" class="form-label">Return Communication Email *</label>
-                <input type="email" id="formEmail" name="email" class="form-input" placeholder="e.g. alex@example.com" required>
-              </div>
-
-              <div class="form-group">
-                <label for="formSubject" class="form-label">Transmission Subject</label>
-                <input type="text" id="formSubject" name="subject" class="form-input" placeholder="e.g. Cybersecurity Research / Internship Opportunity">
-              </div>
-
-              <div class="form-group">
-                <label for="formMessage" class="form-label">Message Payload *</label>
-                <textarea id="formMessage" name="message" class="form-textarea" placeholder="Enter transmission payload here..." required></textarea>
-              </div>
-
-              <div id="formFeedback" class="form-status" role="alert"></div>
-
-              <button type="submit" class="cyber-btn">
-                <i class="fa-solid fa-terminal"></i> Dispatch Transmission
-              </button>
-            </form>
+          <div id="vlanResultStatus" class="vlan-result-box vlan-idle">
+            <i class="fa-solid fa-circle-info"></i> Select source/destination VLAN and dispatch test packet to verify routing &amp; ACL boundaries.
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
+    <!-- CERTIFICATIONS SECTION -->
+<section class="section-wrapper" id="certifications">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-certificate"></i> Verified Credentials</span>
+      <h2 class="section-title">Certifications &amp; Academics</h2>
+      <p class="section-subtitle">
+        Formal collegiate coursework and industry networking curriculum credentials.
+      </p>
+    </div>
+
+    <div class="certs-grid" id="certificationsGrid">
+      <!-- Cert 1 -->
+      <div class="cert-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="cert-icon-wrapper">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div class="cert-body">
+          <span class="cert-badge">Verified Coursework</span>
+          <h4 class="cert-title">Networking Academy Curriculum</h4>
+          <span class="cert-issuer">Cisco Networking Academy</span>
+          <p class="cert-desc">Hands-on mastery of IP routing, switching protocols, subnetting, network troubleshooting, and enterprise network design via Cisco Packet Tracer.</p>
+          <a href="https://www.netacad.com/" target="_blank" rel="noopener noreferrer" class="cert-link">
+            Verify Curriculum / Institution <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Cert 2 -->
+      <div class="cert-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="cert-icon-wrapper">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div class="cert-body">
+          <span class="cert-badge">Academic Credential</span>
+          <h4 class="cert-title">Computer Networks &amp; Cyber Security</h4>
+          <span class="cert-issuer">NPTEL / IIT Ministry of Education</span>
+          <p class="cert-desc">Rigorous collegiate curriculum covering cryptographic primitives, network protocols, OSI model security, and data communication algorithms.</p>
+          <a href="https://nptel.ac.in/" target="_blank" rel="noopener noreferrer" class="cert-link">
+            Verify Curriculum / Institution <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Cert 3 -->
+      <div class="cert-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="cert-icon-wrapper">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div class="cert-body">
+          <span class="cert-badge">Active Study / Verification</span>
+          <h4 class="cert-title">Cybersecurity &amp; Linux Systems Specialization</h4>
+          <span class="cert-issuer">Coursera Partner Consortium</span>
+          <p class="cert-desc">Specialized training focused on defensive security principles, Linux operating system administration, threat assessment, and secure networking.</p>
+          <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer" class="cert-link">
+            Verify Curriculum / Institution <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- SECURITY WRITE-UPS SECTION -->
+<section class="section-wrapper" id="writeups">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-book-bookmark"></i> Technical Documentation</span>
+      <h2 class="section-title">Security Write-ups &amp; Notes</h2>
+      <p class="section-subtitle">
+        Technical breakdowns covering enterprise network segmentation, Linux defense mechanisms, and foundational ML mechanics.
+      </p>
+    </div>
+
+    <div class="writeups-grid" id="writeupsGrid">
+      <!-- Writeup 1 -->
+      <article class="writeup-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="writeup-meta">
+          <span class="writeup-cat">Network Engineering</span>
+          <span class="writeup-date">Nov 2026 • 6 min read</span>
+        </div>
+        <h3 class="writeup-title">Demystifying Enterprise Inter-VLAN Routing &amp; 802.1Q Trunking</h3>
+        <p class="writeup-excerpt">A deep dive into why single broadcast domains fail in enterprise environments, how VLAN tagging works at Layer 2, and setting up Router-on-a-Stick with Access Control Lists.</p>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button class="cyber-link-btn btn-read-writeup" data-writeup-id="writeup-vlan-routing">
+            Quick Modal <i class="fa-solid fa-expand"></i>
+          </button>
+          <a href="writeups/inter-vlan-routing.html" class="cyber-link-btn" title="Open Full Technical Note">
+            Full Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Writeup 2 -->
+      <article class="writeup-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="writeup-meta">
+          <span class="writeup-cat">Systems Defense</span>
+          <span class="writeup-date">Oct 2026 • 5 min read</span>
+        </div>
+        <h3 class="writeup-title">Practical Linux Host Hardening &amp; Attack Surface Reduction</h3>
+        <p class="writeup-excerpt">Essential hardening configurations for Linux servers: key-only SSH authentication, iptables / UFW firewall policies, fail2ban rate limiting, and sudo privilege segregation.</p>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button class="cyber-link-btn btn-read-writeup" data-writeup-id="writeup-linux-hardening">
+            Quick Modal <i class="fa-solid fa-expand"></i>
+          </button>
+          <a href="writeups/linux-server-hardening.html" class="cyber-link-btn" title="Open Full Technical Note">
+            Full Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </article>
+
+      <!-- Writeup 3 -->
+      <article class="writeup-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="writeup-meta">
+          <span class="writeup-cat">AI &amp; Security Research</span>
+          <span class="writeup-date">Sep 2026 • 8 min read</span>
+        </div>
+        <h3 class="writeup-title">Building MyLLM: Inside Tokenization, Embeddings &amp; Attention</h3>
+        <p class="writeup-excerpt">What happens under the hood when constructing an autoregressive transformer model from scratch? Deconstructing matrix dimensions, causal masking, and loss calculation.</p>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button class="cyber-link-btn btn-read-writeup" data-writeup-id="writeup-myllm-mechanics">
+            Quick Modal <i class="fa-solid fa-expand"></i>
+          </button>
+          <a href="writeups/transformer-mechanics.html" class="cyber-link-btn" title="Open Full Technical Note">
+            Full Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+    <!-- CONTACT SECTION -->
+<section class="section-wrapper" id="contact">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-envelope-open-text"></i> Secure Comms</span>
+      <h2 class="section-title">Initiate Contact</h2>
+      <p class="section-subtitle">
+        Reach out for technical collaborations, security research inquiries, or professional opportunities.
+      </p>
+    </div>
+
+    <div class="contact-layout">
+      <!-- Left: Direct Channels -->
+      <div class="contact-info-card cyber-reveal">
+        <h3 class="contact-headline">Direct Communication Channels</h3>
+        <p class="contact-text">
+          Direct email and verified social directory for Sabuj Biswas. Feel free to copy my direct email or connect through LinkedIn.
+        </p>
+
+        <div class="contact-channel-list">
+          <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+            <i class="fa-brands fa-linkedin-in"></i>
+            <div>
+              <span class="channel-label">LinkedIn Profile</span>
+              <span class="channel-val">linkedin.com/in/sabujbiswas-link/</span>
+            </div>
+          </a>
+
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+            <i class="fa-brands fa-github"></i>
+            <div>
+              <span class="channel-label">GitHub Repository</span>
+              <span class="channel-val">github.com/gitcolon-Sabuj</span>
+            </div>
+          </a>
+
+          <div class="contact-channel-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <span class="channel-label">Base Location</span>
+              <span class="channel-val">Kolkata, India</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="cyber-btn btn-copy-email" type="button">
+          <i class="fa-solid fa-copy"></i> Copy Direct Email Address
+        </button>
+      </div>
+
+      <!-- Right: Interactive Form -->
+      <div class="contact-form-card cyber-reveal">
+        <h3 class="form-title"><i class="fa-solid fa-paper-plane"></i> Dispatch Encrypted Inquiry</h3>
+        
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="formName" class="form-label">Operator / Sender Name *</label>
+            <input type="text" id="formName" name="name" class="form-input" placeholder="e.g. Alex Vance" required>
+          </div>
+
+          <div class="form-group">
+            <label for="formEmail" class="form-label">Return Communication Email *</label>
+            <input type="email" id="formEmail" name="email" class="form-input" placeholder="e.g. alex@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="formSubject" class="form-label">Transmission Subject</label>
+            <input type="text" id="formSubject" name="subject" class="form-input" placeholder="e.g. Cybersecurity Research / Internship Opportunity">
+          </div>
+
+          <div class="form-group">
+            <label for="formMessage" class="form-label">Message Payload *</label>
+            <textarea id="formMessage" name="message" class="form-textarea" placeholder="Enter transmission payload here..." required></textarea>
+          </div>
+
+          <div id="formFeedback" class="form-status" role="alert"></div>
+
+          <button type="submit" class="cyber-btn">
+            <i class="fa-solid fa-terminal"></i> Dispatch Transmission
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
   </main>
 
   <!-- MODAL DIALOG COMPONENT -->
-  <div class="cyber-modal" id="cyberModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">Technical Specification</h3>
-        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Dialog Window">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
-    </div>
-  </div>
-
-  <!-- SITE FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-layout">
-        <div class="footer-left">
-          <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
-          <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero external tracking.</span>
-        </div>
-        <div class="footer-right">
-          <span>HOSTED VIA GITHUB &amp; CLOUDFLARE</span>
-          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="GitHub" aria-label="GitHub">
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="LinkedIn" aria-label="LinkedIn">
-            <i class="fa-brands fa-linkedin-in"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- FLOATING CYBER CONTROL HUD TRIGGER & DRAWER -->
-  <button class="cyber-hud-drawer-trigger" id="hudDrawerToggle" aria-label="Open Cyber Control HUD" title="Open Cyber Control HUD">
-    <i class="fa-solid fa-sliders"></i>
-    <span>CYBER HUD</span>
-  </button>
-
-  <aside class="cyber-control-hud" id="cyberControlHud" role="dialog" aria-modal="false" aria-label="Cyber Control HUD">
-    <div class="hud-panel-header">
-      <span class="hud-panel-title">
-        <i class="fa-solid fa-microchip"></i> WORKSPACE CONTROLS
-      </span>
-      <button class="hud-close-btn" id="hudDrawerClose" aria-label="Close Cyber HUD">
+<div class="cyber-modal" id="cyberModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Technical Specification</h3>
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Dialog Window">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
 
-    <!-- Theme Palette Selector -->
-    <div class="hud-control-group">
-      <span class="hud-group-label">Color Scheme (Themes)</span>
-      <div class="hud-theme-grid">
-        <button type="button" class="theme-btn active" data-theme-set="green" title="Matrix Green">
-          <span class="theme-btn-dot dot-green"></span>
-          <span>Matrix</span>
-        </button>
-        <button type="button" class="theme-btn" data-theme-set="amber" title="Amber Phosphor CRT">
-          <span class="theme-btn-dot dot-amber"></span>
-          <span>Amber</span>
-        </button>
-        <button type="button" class="theme-btn" data-theme-set="cyan" title="Cyberpunk Cyan">
-          <span class="theme-btn-dot dot-cyan"></span>
-          <span>Cyan</span>
-        </button>
-        <button type="button" class="theme-btn" data-theme-set="red" title="Red Team Emergency">
-          <span class="theme-btn-dot dot-red"></span>
-          <span>RedTeam</span>
-        </button>
+  <!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-layout">
+      <div class="footer-left">
+        <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+        <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero external tracking.</span>
+      </div>
+      <div class="footer-right">
+        <span>HOSTED VIA GITHUB &amp; CLOUDFLARE</span>
+        <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="GitHub" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/sabujbiswas-link/" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="LinkedIn" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
       </div>
     </div>
+  </div>
+</footer>
 
-    <!-- Matrix Rain Speed Controls -->
-    <div class="hud-control-group">
-      <span class="hud-group-label">Matrix Rain Speed</span>
-      <div class="hud-btn-row">
-        <button type="button" class="matrix-speed-btn" data-speed="pause">Pause</button>
-        <button type="button" class="matrix-speed-btn" data-speed="80">Slow</button>
-        <button type="button" class="matrix-speed-btn active" data-speed="50">Normal</button>
-        <button type="button" class="matrix-speed-btn" data-speed="25">Turbo</button>
-      </div>
-    </div>
+  <!-- FLOATING CYBER CONTROL HUD TRIGGER & DRAWER -->
+<button class="cyber-hud-drawer-trigger" id="hudDrawerToggle" aria-label="Open Cyber Control HUD" title="Open Cyber Control HUD">
+  <i class="fa-solid fa-sliders"></i>
+  <span>CYBER HUD</span>
+</button>
 
-    <!-- Visual Filters & Audio SFX -->
-    <div class="hud-control-group">
-      <span class="hud-group-label">Display &amp; Sensory FX</span>
-      <div class="hud-switch-row">
-        <span>CRT Scanline Overlay</span>
-        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
-          <input type="checkbox" id="toggleCrtScanlines" checked>
-          <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
-        </label>
-      </div>
-      <div class="hud-switch-row">
-        <span>Terminal Audio Keystrokes</span>
-        <button type="button" class="cyber-sfx-toggle">
-          <i class="fa-solid fa-volume-high"></i>
-          <span class="sfx-status-text">SFX: OFF</span>
-        </button>
-      </div>
+<aside class="cyber-control-hud" id="cyberControlHud" role="dialog" aria-modal="false" aria-label="Cyber Control HUD">
+  <div class="hud-panel-header">
+    <span class="hud-panel-title">
+      <i class="fa-solid fa-microchip"></i> WORKSPACE CONTROLS
+    </span>
+    <button class="hud-close-btn" id="hudDrawerClose" aria-label="Close Cyber HUD">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- Theme Palette Selector -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Color Scheme (Themes)</span>
+    <div class="hud-theme-grid">
+      <button type="button" class="theme-btn active" data-theme-set="green" title="Matrix Green">
+        <span class="theme-btn-dot dot-green"></span>
+        <span>Matrix</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="amber" title="Amber Phosphor CRT">
+        <span class="theme-btn-dot dot-amber"></span>
+        <span>Amber</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="cyan" title="Cyberpunk Cyan">
+        <span class="theme-btn-dot dot-cyan"></span>
+        <span>Cyan</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="red" title="Red Team Emergency">
+        <span class="theme-btn-dot dot-red"></span>
+        <span>RedTeam</span>
+      </button>
     </div>
-  </aside>
+  </div>
+
+  <!-- Matrix Rain Speed Controls -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Matrix Rain Speed</span>
+    <div class="hud-btn-row">
+      <button type="button" class="matrix-speed-btn" data-speed="pause">Pause</button>
+      <button type="button" class="matrix-speed-btn" data-speed="80">Slow</button>
+      <button type="button" class="matrix-speed-btn active" data-speed="50">Normal</button>
+      <button type="button" class="matrix-speed-btn" data-speed="25">Turbo</button>
+    </div>
+  </div>
+
+  <!-- Visual Filters & Audio SFX -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Display &amp; Sensory FX</span>
+    <div class="hud-switch-row">
+      <span>Ambient Matrix Rain Blur</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleRainBlurHud" checked>
+        <span id="rainBlurLabel" style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>Target Reticle Cursor</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleCustomCursor" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>3D Card Perspective Tilt</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggle3dCardTilt" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>CRT Scanline Overlay</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleCrtScanlines" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>Terminal Audio Keystrokes</span>
+      <button type="button" class="cyber-sfx-toggle">
+        <i class="fa-solid fa-volume-high"></i>
+        <span class="sfx-status-text">SFX: OFF</span>
+      </button>
+    </div>
+  </div>
+</aside>
 
   <!-- Script Architecture -->
   <script src="js/config.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/animations.js"></script>
+  <script src="js/cursor.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/terminal.js"></script>
   <script src="js/dashboard.js"></script>

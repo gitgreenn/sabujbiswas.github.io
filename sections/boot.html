@@ -1,0 +1,18 @@
+<!-- LINUX BOOT SEQUENCE (Optional / Accessible / Skippable) -->
+<div class="boot-screen" id="bootScreen" role="dialog" aria-modal="true" aria-label="System Boot Sequence">
+  <div class="boot-header">
+    <span class="boot-sys-name">SABUJ // CYBERSPACE OS v3.8 [BOOT SEQUENCE]</span>
+    <button class="boot-skip-btn" id="skipBootBtn" aria-label="Skip initialization sequence">
+      Skip Boot [ESC]
+    </button>
+  </div>
+  <div class="boot-terminal-body" id="bootLogs"></div>
+  <div class="boot-footer">
+    <div class="boot-progress-wrapper">
+      <div class="boot-progress-track">
+        <div class="boot-progress-bar" id="bootProgressBar"></div>
+      </div>
+      <span class="boot-percent" id="bootPercent">0%</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050807" />
+      <stop offset="100%" stop-color="#0a120e" />
+    </linearGradient>
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="900" height="380" rx="10" fill="url(#bgGrad2)" stroke="#1a3528" stroke-width="2"/>
+
+  <!-- Title Badge -->
+  <text x="35" y="40" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold" fill="#00FF88" letter-spacing="1.5">BIOMETRIC ATTENDANCE COMPUTER VISION PIPELINE</text>
+  <text x="35" y="60" font-family="'JetBrains Mono', monospace" font-size="11" fill="#5a7566">OpenCV Video Stream // Haar Cascade ROI // Cosine Similarity // SQLite3 Database</text>
+
+  <!-- Step 1: Video Feed -->
+  <g transform="translate(40, 100)">
+    <rect x="0" y="0" width="140" height="180" rx="6" fill="#0d1712" stroke="#00E5FF" stroke-width="1.5"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00E5FF">01. STREAM</text>
+    <rect x="25" y="50" width="90" height="65" rx="4" fill="#050807" stroke="#00E5FF" stroke-dasharray="3,3"/>
+    <circle cx="70" cy="82" r="16" fill="none" stroke="#00E5FF"/>
+    <text x="25" y="140" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">Webcam Input</text>
+    <text x="25" y="155" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5a7566">30 FPS Video Capture</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 190 190 L 220 190" stroke="#00FF88" stroke-width="2" marker-end="url(#arrow)"/>
+  <polygon points="220,186 226,190 220,194" fill="#00FF88"/>
+
+  <!-- Step 2: Haar Detection -->
+  <g transform="translate(230, 100)">
+    <rect x="0" y="0" width="150" height="180" rx="6" fill="#0d1712" stroke="#00FF88" stroke-width="1.5"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00FF88">02. DETECTION</text>
+    <rect x="30" y="50" width="90" height="65" rx="4" fill="#050807" stroke="#00FF88"/>
+    <!-- Face Target Reticle -->
+    <rect x="45" y="60" width="60" height="45" fill="none" stroke="#00FF88" stroke-width="2"/>
+    <text x="20" y="140" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">Haar Cascade</text>
+    <text x="20" y="155" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5a7566">ROI Crop &amp; Grayscale</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <polygon points="390,186 396,190 390,194" fill="#00FF88"/>
+  <line x1="380" y1="190" x2="394" y2="190" stroke="#00FF88" stroke-width="2"/>
+
+  <!-- Step 3: Feature Encoding -->
+  <g transform="translate(400, 100)">
+    <rect x="0" y="0" width="145" height="180" rx="6" fill="#0d1712" stroke="#FFB703" stroke-width="1.5"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#FFB703">03. ENCODING</text>
+    <rect x="25" y="50" width="95" height="65" rx="4" fill="#050807" stroke="#FFB703"/>
+    <text x="32" y="75" font-family="'JetBrains Mono', monospace" font-size="8" fill="#FFB703">[ 0.142, -0.891,</text>
+    <text x="32" y="90" font-family="'JetBrains Mono', monospace" font-size="8" fill="#FFB703">  0.428,  0.034 ]</text>
+    <text x="20" y="140" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">128-d Vector</text>
+    <text x="20" y="155" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5a7566">Normalized Matrix</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <polygon points="555,186 561,190 555,194" fill="#00FF88"/>
+  <line x1="545" y1="190" x2="559" y2="190" stroke="#00FF88" stroke-width="2"/>
+
+  <!-- Step 4: Database Match -->
+  <g transform="translate(565, 100)">
+    <rect x="0" y="0" width="145" height="180" rx="6" fill="#0d1712" stroke="#00E5FF" stroke-width="1.5"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00E5FF">04. MATCHING</text>
+    <rect x="25" y="50" width="95" height="65" rx="4" fill="#050807" stroke="#00E5FF"/>
+    <text x="35" y="75" font-family="'JetBrains Mono', monospace" font-size="9" fill="#00E5FF">SQLite3</text>
+    <text x="35" y="95" font-family="'JetBrains Mono', monospace" font-size="8" fill="#00FF88">Dist &lt; 0.50 [OK]</text>
+    <text x="20" y="140" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">Cosine Match</text>
+    <text x="20" y="155" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5a7566">Local Database</text>
+  </g>
+
+  <!-- Arrow 4 -->
+  <polygon points="720,186 726,190 720,194" fill="#00FF88"/>
+  <line x1="710" y1="190" x2="724" y2="190" stroke="#00FF88" stroke-width="2"/>
+
+  <!-- Step 5: Export / Attendance Log -->
+  <g transform="translate(730, 100)">
+    <rect x="0" y="0" width="135" height="180" rx="6" fill="#0d1712" stroke="#00FF88" stroke-width="1.5" filter="url(#glowGreen)"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00FF88">05. LOGGED</text>
+    <rect x="20" y="50" width="95" height="65" rx="4" fill="#050807" stroke="#00FF88"/>
+    <text x="28" y="72" font-family="'JetBrains Mono', monospace" font-size="8" fill="#ffffff">ID: 2026-CS-04</text>
+    <text x="28" y="86" font-family="'JetBrains Mono', monospace" font-size="8" fill="#00FF88">PRESENT [VERIFIED]</text>
+    <text x="28" y="100" font-family="'JetBrains Mono', monospace" font-size="8" fill="#a3b8ad">10:14:22 UTC</text>
+    <text x="15" y="140" font-family="'JetBrains Mono', monospace" font-size="9" fill="#00FF88">CSV &amp; SQL Log</text>
+    <text x="15" y="155" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5a7566">Auto-attendance</text>
+  </g>
+</svg>

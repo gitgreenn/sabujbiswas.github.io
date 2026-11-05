@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Inter-VLAN Network Design // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Case Study: Enterprise Inter-VLAN Router-on-a-Stick Network Architecture with IEEE 802.1Q encapsulation and Extended ACL security filtering.">
+    <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <!-- Canvas Matrix Ambient Background -->
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <!-- Breadcrumb Navigation Bar -->
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /projects/</span>
+        <span class="current-page">vlan-network-design.spec</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#projects" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Project Hero Header -->
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SYS.PROJ // 01</span>
+          <span class="cyber-chip"><i class="fa-solid fa-network-wired"></i> Network Infrastructure</span>
+          <span class="cyber-chip"><i class="fa-solid fa-shield-halved"></i> Perimeter Hardening</span>
+        </div>
+
+        <h1 class="detail-title">Enterprise Inter-VLAN Network Design</h1>
+        <p class="detail-lead">
+          Design, topology simulation, and perimeter security implementation of a segmented enterprise network utilizing IEEE 802.1Q Router-on-a-Stick (ROAS), dynamic DHCP pools, and stateful Extended Access Control Lists (ACL-101).
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Primary Tool</span>
+            <span class="meta-value">Cisco Packet Tracer / IOS</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Protocol Standard</span>
+            <span class="meta-value">IEEE 802.1Q (VLAN Tagging)</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Core Architecture</span>
+            <span class="meta-value">Router-on-a-Stick (ROAS)</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Security Boundary</span>
+            <span class="meta-value">Extended ACL 101 Filter</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Case Study Content -->
+    <section class="detail-content-section">
+      <div class="container">
+        <!-- 01: Topology Architecture Blueprint -->
+        <article class="doc-section">
+          <span class="doc-tag">01 // TOPOLOGY ARCHITECTURE</span>
+          <h2 class="doc-heading">Segmented Network Schematic</h2>
+          <p class="doc-body-text">
+            The core architecture decouples departmental broadcast domains across an enterprise distribution switch. All inter-VLAN routing is performed via a GigabitEthernet 802.1Q trunk link to a Cisco Core Router with dedicated sub-interfaces acting as departmental default gateways.
+          </p>
+          
+          <div class="detail-schematic-card">
+            <img src="../assets/images/vlan-topology.svg" alt="Enterprise Inter-VLAN Network Blueprint" class="detail-schematic-img">
+          </div>
+        </article>
+
+        <!-- 02: Subnet Addressing & VLAN Matrix -->
+        <article class="doc-section">
+          <span class="doc-tag">02 // LOGICAL ADDRESSING</span>
+          <h2 class="doc-heading">Departmental IP Subnetting Scheme</h2>
+          <p class="doc-body-text">
+            Each organizational unit is assigned an isolated /24 IPv4 address space. Inter-departmental broadcasts are strictly contained within their respective layer-2 switches, preventing broadcast storms and network congestion.
+          </p>
+
+          <div class="spec-table-wrapper">
+            <table class="spec-table">
+              <thead>
+                <tr>
+                  <th>VLAN ID</th>
+                  <th>Department / Function</th>
+                  <th>Subnet CIDR</th>
+                  <th>Gateway (Sub-interface)</th>
+                  <th>DHCP Scope Pool</th>
+                  <th>Security Posture</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>VLAN 10</code></td>
+                  <td>Engineering &amp; Dev</td>
+                  <td><code>192.168.10.0/24</code></td>
+                  <td><code>192.168.10.1 (g0/0.10)</code></td>
+                  <td><code>POOL_ENG (10.10 - 10.250)</code></td>
+                  <td>Full Server Farm Access</td>
+                </tr>
+                <tr>
+                  <td><code>VLAN 20</code></td>
+                  <td>Guest / External</td>
+                  <td><code>192.168.20.0/24</code></td>
+                  <td><code>192.168.20.1 (g0/0.20)</code></td>
+                  <td><code>POOL_GUEST (20.10 - 20.250)</code></td>
+                  <td><strong style="color: var(--accent-red);">BLOCKED</strong> from Internal Servers</td>
+                </tr>
+                <tr>
+                  <td><code>VLAN 30</code></td>
+                  <td>Internal Server Farm</td>
+                  <td><code>192.168.30.0/24</code></td>
+                  <td><code>192.168.30.1 (g0/0.30)</code></td>
+                  <td>Static IP Assignments</td>
+                  <td>Restricted Ingress via ACL-101</td>
+                </tr>
+                <tr>
+                  <td><code>VLAN 99</code></td>
+                  <td>Management &amp; Native</td>
+                  <td><code>192.168.99.0/24</code></td>
+                  <td><code>192.168.99.1 (g0/0.99)</code></td>
+                  <td>Out-of-band Admin</td>
+                  <td>Isolated SVI SSH Only</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- 03: Cisco IOS Configuration Details -->
+        <article class="doc-section">
+          <span class="doc-tag">03 // IMPLEMENTATION</span>
+          <h2 class="doc-heading">Cisco IOS Configuration Artifacts</h2>
+          <p class="doc-body-text">
+            Below are the validated configuration scripts deployed to the Cisco 2901 Router and Catalyst 2960 Switch interfaces.
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-code"></i> Cisco IOS // Core-Router-ROAS.cfg</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>! Bring up primary trunk physical interface without IP
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# no ip address
+Router(config-if)# no shutdown
+Router(config-if)# exit
+
+! VLAN 10 Sub-Interface (Engineering)
+Router(config)# interface GigabitEthernet0/0.10
+Router(config-subif)# encapsulation dot1Q 10
+Router(config-subif)# ip address 192.168.10.1 255.255.255.0
+Router(config-subif)# exit
+
+! VLAN 20 Sub-Interface (Guest Network)
+Router(config)# interface GigabitEthernet0/0.20
+Router(config-subif)# encapsulation dot1Q 20
+Router(config-subif)# ip address 192.168.20.1 255.255.255.0
+Router(config-subif)# exit
+
+! VLAN 30 Sub-Interface (Production Server Farm)
+Router(config)# interface GigabitEthernet0/0.30
+Router(config-subif)# encapsulation dot1Q 30
+Router(config-subif)# ip address 192.168.30.1 255.255.255.0
+Router(config-subif)# exit
+
+! Configure Dynamic DHCP Pools
+Router(config)# ip dhcp excluded-address 192.168.10.1 192.168.10.9
+Router(config)# ip dhcp pool POOL_ENGINEERING
+Router(dhcp-config)# network 192.168.10.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.10.1
+Router(dhcp-config)# dns-server 192.168.30.5
+Router(dhcp-config)# exit</code></pre>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-shield-halved"></i> Cisco IOS // Extended-ACL-101.cfg</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>! Define Extended ACL 101 to enforce departmental security boundaries
+! Rule 1: Allow Engineering VLAN to reach Server Farm over HTTP/HTTPS/SSH
+access-list 101 permit tcp 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255 eq 80
+access-list 101 permit tcp 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255 eq 443
+access-list 101 permit tcp 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255 eq 22
+
+! Rule 2: Explicitly DROP all traffic from Guest VLAN 20 attempting to reach Server Farm
+access-list 101 deny ip 192.168.20.0 0.0.0.255 192.168.30.0 0.0.0.255
+
+! Rule 3: Permit general outbound Internet egress
+access-list 101 permit ip any any
+
+! Apply ACL 101 at router sub-interface ingress boundary
+interface GigabitEthernet0/0.20
+ ip access-group 101 in</code></pre>
+          </div>
+        </article>
+
+        <!-- 04: Security Threat Analysis & Mitigation -->
+        <article class="doc-section">
+          <span class="doc-tag">04 // DEFENSE-IN-DEPTH</span>
+          <h2 class="doc-heading">Security Considerations &amp; Hardening</h2>
+          <p class="doc-body-text">
+            Enterprise networks face significant lateral movement threats if an attacker gains physical or wireless access to access-layer ports. Below are the mitigation mechanisms built into this topology:
+          </p>
+
+          <div class="security-callout">
+            <div class="security-callout-title">
+              <i class="fa-solid fa-shield-virus"></i> VLAN Hopping &amp; Double-Tagging Mitigation
+            </div>
+            <p class="security-callout-text">
+              By assigning the Native VLAN to an unused ID (<code>VLAN 99</code>) and disabling Dynamic Trunking Protocol (DTP) across all end-user ports (<code>switchport mode access</code> + <code>switchport nonegotiate</code>), attackers cannot generate double 802.1Q tags to illegally bypass switch encapsulation boundaries.
+            </p>
+          </div>
+
+          <div class="verif-matrix">
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-circle-check"></i> Layer-2 Broadcast Isolation
+              </div>
+              <p>ARP broadcasts and NetBIOS traffic generated in Guest VLAN 20 cannot traverse to Engineering hosts, eliminating sniffing attack surfaces.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-circle-check"></i> ACL Boundary Enforcement
+              </div>
+              <p>Tested packet drops via ICMP echo requests: 100% of packets from <code>192.168.20.25</code> to <code>192.168.30.10</code> are dropped by Extended ACL 101.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-circle-check"></i> DHCP Rogue Defense
+              </div>
+              <p>Configured DHCP Snooping on the Catalyst switch; only the uplink trunk to the core router is marked as a trusted DHCP interface.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Actions Footer -->
+        <div class="detail-actions-footer">
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn">
+            <i class="fa-brands fa-github"></i> Inspect GitHub Repository
+          </a>
+          <a href="../index.html#labs" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-microchip"></i> Test in Simulation Workbench
+          </a>
+          <button onclick="window.print()" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-print"></i> Print Case Study
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>

@@ -89,7 +89,8 @@ const CONFIG = {
         "Verified packet propagation and ping boundary tests"
       ],
       github: "https://github.com/gitcolon-Sabuj",
-      demo: "#"
+      demo: "#",
+      schematic: "assets/images/vlan-topology.svg"
     },
     {
       id: "face-recognition-attendance",
@@ -107,7 +108,8 @@ const CONFIG = {
         "Daily attendance export to standard CSV spreadsheets"
       ],
       github: "https://github.com/gitcolon-Sabuj",
-      demo: "#"
+      demo: "#",
+      schematic: "assets/images/face-pipeline.svg"
     },
     {
       id: "my-llm",
@@ -125,7 +127,8 @@ const CONFIG = {
         "Zero third-party black-box NLP frameworks used"
       ],
       github: "https://github.com/gitcolon-Sabuj",
-      demo: "#"
+      demo: "#",
+      schematic: "assets/images/myllm-transformer.svg"
     }
   ],
 

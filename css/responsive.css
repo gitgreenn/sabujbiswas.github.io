@@ -42,6 +42,15 @@
 
 /* ================= MOBILE VIEWPORTS (<= 768px) ================= */
 @media (max-width: 768px) {
+  /* Prevent iOS Safari aggressive auto-zoom on input focus */
+  .terminal-input-field,
+  .form-input,
+  .form-textarea,
+  .sim-input-field,
+  .sim-select-field {
+    font-size: 16px !important;
+  }
+
   .navbar-wrapper {
     height: 70px;
   }
@@ -247,12 +256,14 @@
   .cyber-control-hud {
     width: calc(100vw - 32px);
     right: 16px;
-    bottom: 70px;
+    bottom: max(70px, calc(env(safe-area-inset-bottom) + 60px));
+    max-height: calc(100vh - 120px);
+    max-height: calc(100dvh - 120px);
   }
 
   .cyber-hud-drawer-trigger {
-    bottom: 16px;
-    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    right: max(16px, env(safe-area-inset-right));
     padding: 8px 12px;
     font-size: 0.75rem;
   }

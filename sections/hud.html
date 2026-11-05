@@ -1,0 +1,90 @@
+<!-- FLOATING CYBER CONTROL HUD TRIGGER & DRAWER -->
+<button class="cyber-hud-drawer-trigger" id="hudDrawerToggle" aria-label="Open Cyber Control HUD" title="Open Cyber Control HUD">
+  <i class="fa-solid fa-sliders"></i>
+  <span>CYBER HUD</span>
+</button>
+
+<aside class="cyber-control-hud" id="cyberControlHud" role="dialog" aria-modal="false" aria-label="Cyber Control HUD">
+  <div class="hud-panel-header">
+    <span class="hud-panel-title">
+      <i class="fa-solid fa-microchip"></i> WORKSPACE CONTROLS
+    </span>
+    <button class="hud-close-btn" id="hudDrawerClose" aria-label="Close Cyber HUD">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- Theme Palette Selector -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Color Scheme (Themes)</span>
+    <div class="hud-theme-grid">
+      <button type="button" class="theme-btn active" data-theme-set="green" title="Matrix Green">
+        <span class="theme-btn-dot dot-green"></span>
+        <span>Matrix</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="amber" title="Amber Phosphor CRT">
+        <span class="theme-btn-dot dot-amber"></span>
+        <span>Amber</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="cyan" title="Cyberpunk Cyan">
+        <span class="theme-btn-dot dot-cyan"></span>
+        <span>Cyan</span>
+      </button>
+      <button type="button" class="theme-btn" data-theme-set="red" title="Red Team Emergency">
+        <span class="theme-btn-dot dot-red"></span>
+        <span>RedTeam</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Matrix Rain Speed Controls -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Matrix Rain Speed</span>
+    <div class="hud-btn-row">
+      <button type="button" class="matrix-speed-btn" data-speed="pause">Pause</button>
+      <button type="button" class="matrix-speed-btn" data-speed="80">Slow</button>
+      <button type="button" class="matrix-speed-btn active" data-speed="50">Normal</button>
+      <button type="button" class="matrix-speed-btn" data-speed="25">Turbo</button>
+    </div>
+  </div>
+
+  <!-- Visual Filters & Audio SFX -->
+  <div class="hud-control-group">
+    <span class="hud-group-label">Display &amp; Sensory FX</span>
+    <div class="hud-switch-row">
+      <span>Ambient Matrix Rain Blur</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleRainBlurHud" checked>
+        <span id="rainBlurLabel" style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>Target Reticle Cursor</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleCustomCursor" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>3D Card Perspective Tilt</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggle3dCardTilt" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>CRT Scanline Overlay</span>
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="toggleCrtScanlines" checked>
+        <span style="font-size: 0.72rem; color: var(--accent-green);">ON</span>
+      </label>
+    </div>
+    <div class="hud-switch-row">
+      <span>Terminal Audio Keystrokes</span>
+      <button type="button" class="cyber-sfx-toggle">
+        <i class="fa-solid fa-volume-high"></i>
+        <span class="sfx-status-text">SFX: OFF</span>
+      </button>
+    </div>
+  </div>
+</aside>

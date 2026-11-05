@@ -1,0 +1,10 @@
+/* ================= MINI RADAR SWEEP ================= */
+.radar-mini-sweep {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-active);
+  background: #020704;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+  flex-shrink: 0;
+}

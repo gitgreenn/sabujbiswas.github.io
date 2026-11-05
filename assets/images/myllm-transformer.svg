@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050807" />
+      <stop offset="100%" stop-color="#0a120e" />
+    </linearGradient>
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="900" height="420" rx="10" fill="url(#bgGrad3)" stroke="#1a3528" stroke-width="2"/>
+
+  <!-- Title Badge -->
+  <text x="35" y="40" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold" fill="#00FF88" letter-spacing="1.5">MYLLM — AUTOREGRESSIVE TRANSFORMER ARCHITECTURE</text>
+  <text x="35" y="60" font-family="'JetBrains Mono', monospace" font-size="11" fill="#5a7566">Tokenization // Scaled Dot-Product Attention // Causal Masking // Backpropagation</text>
+
+  <!-- Left: Tokenization Block -->
+  <g transform="translate(40, 95)">
+    <rect x="0" y="0" width="150" height="280" rx="6" fill="#0d1712" stroke="#00E5FF" stroke-width="1.5"/>
+    <text x="15" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00E5FF">INPUT EMBEDDING</text>
+    
+    <rect x="15" y="55" width="120" height="40" rx="4" fill="#050807" stroke="#00E5FF" stroke-dasharray="2,2"/>
+    <text x="24" y="80" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ffffff">Raw String Tokens</text>
+
+    <text x="70" y="125" font-family="'JetBrains Mono', monospace" font-size="14" fill="#00FF88">+</text>
+
+    <rect x="15" y="145" width="120" height="40" rx="4" fill="#050807" stroke="#FFB703"/>
+    <text x="22" y="170" font-family="'JetBrains Mono', monospace" font-size="9" fill="#FFB703">Positional Encoding</text>
+
+    <rect x="15" y="215" width="120" height="40" rx="4" fill="#050807" stroke="#00FF88"/>
+    <text x="22" y="240" font-family="'JetBrains Mono', monospace" font-size="9" fill="#00FF88">x = Emb + Pos_Enc</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="215,231 222,235 215,239" fill="#00FF88"/>
+  <line x1="190" y1="235" x2="220" y2="235" stroke="#00FF88" stroke-width="2"/>
+
+  <!-- Center: Multi-Head Attention Block -->
+  <g transform="translate(230, 95)">
+    <rect x="0" y="0" width="380" height="280" rx="6" fill="#0d1712" stroke="#00FF88" stroke-width="2" filter="url(#glowCyan)"/>
+    <text x="20" y="30" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold" fill="#00FF88">TRANSFORMER BLOCK (L = 6 LAYERS)</text>
+    
+    <!-- Q, K, V Projections -->
+    <rect x="25" y="55" width="95" height="45" rx="4" fill="#050807" stroke="#00E5FF"/>
+    <text x="35" y="82" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00E5FF">Q = x * W_q</text>
+
+    <rect x="140" y="55" width="95" height="45" rx="4" fill="#050807" stroke="#00E5FF"/>
+    <text x="150" y="82" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00E5FF">K = x * W_k</text>
+
+    <rect x="255" y="55" width="95" height="45" rx="4" fill="#050807" stroke="#00E5FF"/>
+    <text x="265" y="82" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00E5FF">V = x * W_v</text>
+
+    <!-- Scaled Dot-Product formula -->
+    <rect x="25" y="125" width="325" height="55" rx="4" fill="#050807" stroke="#00FF88"/>
+    <text x="40" y="150" font-family="'JetBrains Mono', monospace" font-size="11" fill="#ffffff">Attention = Softmax( (Q * K^T) / sqrt(d_k) + M ) * V</text>
+    <text x="40" y="168" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">M: Upper-triangular causal mask (-inf)</text>
+
+    <!-- LayerNorm + Residual -->
+    <rect x="25" y="205" width="150" height="50" rx="4" fill="#08140e" stroke="#00FF88"/>
+    <text x="40" y="235" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00FF88">LayerNorm(x + Attn)</text>
+
+    <!-- FeedForward -->
+    <rect x="200" y="205" width="150" height="50" rx="4" fill="#08140e" stroke="#FFB703"/>
+    <text x="215" y="235" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFB703">Linear(4 * d_model)</text>
+  </g>
+
+  <!-- Arrow -->
+  <polygon points="635,231 642,235 635,239" fill="#00FF88"/>
+  <line x1="610" y1="235" x2="640" y2="235" stroke="#00FF88" stroke-width="2"/>
+
+  <!-- Right: Output Prediction -->
+  <g transform="translate(650, 95)">
+    <rect x="0" y="0" width="200" height="280" rx="6" fill="#0d1712" stroke="#00E5FF" stroke-width="1.5"/>
+    <text x="20" y="30" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#00E5FF">GENERATION HEAD</text>
+    
+    <rect x="20" y="65" width="160" height="45" rx="4" fill="#050807" stroke="#00E5FF"/>
+    <text x="32" y="92" font-family="'JetBrains Mono', monospace" font-size="10" fill="#ffffff">Linear (Vocab Projection)</text>
+
+    <rect x="20" y="135" width="160" height="45" rx="4" fill="#050807" stroke="#00FF88"/>
+    <text x="32" y="162" font-family="'JetBrains Mono', monospace" font-size="10" fill="#00FF88">Softmax / Temperature</text>
+
+    <rect x="20" y="205" width="160" height="55" rx="4" fill="#08140e" stroke="#00FF88" stroke-width="2"/>
+    <text x="32" y="228" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a3b8ad">Predicted Next Token:</text>
+    <text x="32" y="248" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#00FF88">"cybersecurity"</text>
+  </g>
+</svg>

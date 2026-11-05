@@ -1,0 +1,45 @@
+/* ================= INTERACTIVE TERMINAL SECTION ================= */
+.terminal-section {
+  padding: 60px 0 100px;
+  position: relative;
+}
+
+.terminal-header-controls {
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.terminal-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.quick-chip-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.term-quick-btn {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  padding: 4px 10px;
+  background: rgba(0, 255, 136, 0.06);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--accent-green);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.term-quick-btn:hover {
+  background: var(--accent-green);
+  color: #050807;
+  box-shadow: 0 0 10px var(--accent-green-glow);
+}

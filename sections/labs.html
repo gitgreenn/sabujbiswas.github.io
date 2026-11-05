@@ -1,0 +1,210 @@
+<!-- SECURITY LABS SECTION -->
+<section class="section-wrapper" id="labs">
+  <div class="container">
+    <div class="section-header cyber-reveal">
+      <span class="section-tag"><i class="fa-solid fa-flask-vial"></i> Experimental Research</span>
+      <h2 class="section-title">Security &amp; Networking Labs</h2>
+      <p class="section-subtitle">
+        Hands-on technical laboratory simulations, firewall ruleset configurations, and systems hardening exercises.
+      </p>
+    </div>
+
+    <div class="labs-grid" id="securityLabsGrid">
+      <!-- Lab 1 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Network Security</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
+        </div>
+        <h4 class="lab-title">Inter-VLAN Routing &amp; Subnet Hardening</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Cisco Packet Tracer / GNS3</code></p>
+        <p class="lab-obj">Isolate broadcast domains, configure 802.1Q trunking, and restrict unauthorized inter-subnet traversal with ACL rulesets.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Subnetting calculations, router sub-interfaces, encapsulation dot1q, packet filtering policies.</p>
+        </div>
+        <a href="labs/inter-vlan-routing.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 2 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Firewall Defense</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
+        </div>
+        <h4 class="lab-title">Firewall Configuration &amp; Perimeter Filtering</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Cisco IOS / Linux iptables</code></p>
+        <p class="lab-obj">Establish ingress/egress filtering rules to drop spoofed IP ranges, mitigate ICMP flood vectors, and control port access.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Stateful inspection concepts, directionality of ACL application (in vs out), standard vs extended syntax.</p>
+        </div>
+        <a href="labs/firewall-perimeter-filtering.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 3 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Linux Administration</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
+        </div>
+        <h4 class="lab-title">Linux Server Hardening &amp; User Privilege Auditing</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Ubuntu / Debian LTS / Kali Linux</code></p>
+        <p class="lab-obj">Harden a fresh Linux server: SSH key-only authentication, fail2ban setup, disabling root login, and strict file permissions.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>chmod/chown octal permissions, sudoers configuration, auditd, systemd service management.</p>
+        </div>
+        <a href="labs/linux-server-hardening.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 4 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Security Automation</span>
+          <span class="lab-status-badge status-completed">
+            <span class="status-dot"></span> COMPLETED
+          </span>
+        </div>
+        <h4 class="lab-title">Python Port Scanner &amp; Socket Reconnaissance</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Python 3 / Raw Sockets / Scapy</code></p>
+        <p class="lab-obj">Write a multi-threaded socket script to identify open ports, banner grab active services, and measure latency across target IPs.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Socket programming, TCP SYN/ACK handshake dynamics, thread synchronization, error handling.</p>
+        </div>
+        <a href="labs/python-port-scanner.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 5 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Web Security</span>
+          <span class="lab-status-badge status-progress">
+            <span class="status-dot"></span> IN RESEARCH
+          </span>
+        </div>
+        <h4 class="lab-title">Web Security: OWASP Top 10 Hands-on Testing</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>OWASP Juice Shop / DVWA</code></p>
+        <p class="lab-obj">Analyze common application-layer security vulnerabilities including SQL Injection, Cross-Site Scripting (XSS), and insecure direct object references.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>HTTP request tampering, input sanitization defense, CSRF token validation, parameterized SQL queries.</p>
+        </div>
+        <a href="labs/owasp-web-testing.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+
+      <!-- Lab 6 -->
+      <div class="lab-card cyber-reveal">
+        <div class="card-sheen"></div>
+        <div class="lab-header">
+          <span class="lab-category"><i class="fa-solid fa-flask"></i> Traffic Analysis</span>
+          <span class="lab-status-badge status-progress">
+            <span class="status-dot"></span> IN RESEARCH
+          </span>
+        </div>
+        <h4 class="lab-title">Network Packet Analysis &amp; Protocol Inspection</h4>
+        <p class="lab-env"><strong>Environment:</strong> <code>Wireshark / tcpdump</code></p>
+        <p class="lab-obj">Capture live promiscuous network traffic to examine ARP requests, DNS queries, and cleartext transmission risks.</p>
+        <div class="lab-takeaway">
+          <span class="takeaway-label">Key Competency:</span>
+          <p>Pcap parsing, packet payload inspection, analyzing SSL/TLS handshakes.</p>
+        </div>
+        <a href="labs/packet-analysis-wireshark.html" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="margin-top: 14px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-file-code"></i> Full Lab Report
+        </a>
+      </div>
+    </div>
+
+    <!-- Interactive Hands-on Security Workbench -->
+    <div class="sim-workbench-card cyber-reveal">
+      <div class="card-sheen"></div>
+      <div class="sim-workbench-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <canvas id="radarSweepCanvas" width="44" height="44" class="radar-mini-sweep" title="Active Perimeter Radar"></canvas>
+          <h3 class="sim-workbench-title">
+            <i class="fa-solid fa-microchip"></i> Interactive Lab Simulation Workbench
+          </h3>
+        </div>
+        <span class="cyber-tag">LIVE TESTING SANDBOX</span>
+      </div>
+
+      <div class="sim-grid-two-col">
+        <!-- Port Scanner Simulator -->
+        <div class="sim-subcard">
+          <div>
+            <h4 class="sim-subcard-title">
+              <i class="fa-solid fa-radar"></i> Stealth SYN Port Scanner
+            </h4>
+            <p class="sim-subcard-desc">
+              Simulate raw socket SYN reconnaissance against target IP to observe open ports, service banners, and firewall dropping.
+            </p>
+            <div class="sim-input-row">
+              <input type="text" id="scanTargetInput" class="sim-input-field" value="192.168.10.1" placeholder="Target Host / IP..." aria-label="Port Scanner Target Host">
+              <button type="button" id="btnRunPortScan" class="cyber-btn cyber-btn-sm">
+                <i class="fa-solid fa-play"></i> Run SYN Scan
+              </button>
+            </div>
+            <div class="sim-progress-track">
+              <div class="sim-progress-fill" id="scannerProgress"></div>
+            </div>
+          </div>
+          <div class="sim-log-window" id="scannerLogOutput" role="log" aria-live="polite">
+            <div class="sim-log-line term-muted">Click 'Run SYN Scan' to initiate port reconnaissance simulation...</div>
+          </div>
+        </div>
+
+        <!-- VLAN Router-on-a-Stick Packet Flow Simulator -->
+        <div class="sim-subcard">
+          <div>
+            <h4 class="sim-subcard-title">
+              <i class="fa-solid fa-network-wired"></i> VLAN 802.1Q &amp; ACL Packet Router
+            </h4>
+            <p class="sim-subcard-desc">
+              Test Inter-VLAN sub-interface routing policies and evaluate Extended ACL-101 packet filtering rules.
+            </p>
+            <div class="sim-input-row">
+              <select id="vlanSrcSelect" class="sim-select-field" aria-label="Source VLAN Network">
+                <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+                <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+              </select>
+              <select id="vlanDstSelect" class="sim-select-field" aria-label="Destination VLAN Network">
+                <option value="vlan30">VLAN 30: Server Farm (192.168.30.0/24)</option>
+                <option value="vlan10">VLAN 10: Engineering (192.168.10.0/24)</option>
+                <option value="vlan20">VLAN 20: Guest Network (192.168.20.0/24)</option>
+              </select>
+            </div>
+            <button type="button" id="btnDispatchPacket" class="cyber-btn cyber-btn-sm" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Dispatch 802.1Q Packet Through Router
+            </button>
+          </div>
+          <div id="vlanResultStatus" class="vlan-result-box vlan-idle">
+            <i class="fa-solid fa-circle-info"></i> Select source/destination VLAN and dispatch test packet to verify routing &amp; ACL boundaries.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

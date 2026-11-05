@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERSPACE — Sabuj Biswas | Cybersecurity Portfolio</title>
+  
+  <!-- SEO & Open Graph Metadata -->
+  <meta name="description" content="Personal cybersecurity digital workspace & portfolio of Sabuj Biswas. Specializing in network security, ethical hacking, Linux administration, and security automation.">
+  <meta name="keywords" content="Sabuj Biswas, Cybersecurity, Network Security, Ethical Hacking, Linux, Cisco Packet Tracer, Python, Portfolio">
+  <meta name="author" content="Sabuj Biswas">
+  <meta name="theme-color" content="#080D0B">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SABUJ // CYBERSPACE — Cybersecurity Portfolio">
+  <meta property="og:description" content="Interactive cybersecurity dashboard & Linux terminal portfolio of Sabuj Biswas.">
+  <meta property="og:url" content="https://github.com/gitcolon-Sabuj">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Modular CSS Architecture -->
+  <link rel="stylesheet" href="css/style.css?v=3.9.1">
+  <link rel="stylesheet" href="css/terminal.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body>
+  <!-- Canvas Matrix Background -->
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-radial-glow" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <!-- include: sections/nav.html -->
+
+  <main>
+    <!-- include: sections/hero.html -->
+
+    <!-- include: sections/terminal.html -->
+
+    <!-- include: sections/about.html -->
+
+    <!-- include: sections/skills.html -->
+
+    <!-- include: sections/projects.html -->
+
+    <!-- include: sections/labs.html -->
+
+    <!-- include: sections/certs.html -->
+
+    <!-- include: sections/writeups.html -->
+
+    <!-- include: sections/contact.html -->
+  </main>
+
+  <!-- include: sections/modal.html -->
+
+  <!-- include: sections/footer.html -->
+
+  <!-- include: sections/hud.html -->
+
+  <!-- Script Architecture -->
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

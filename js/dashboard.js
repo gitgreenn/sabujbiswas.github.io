@@ -24,6 +24,9 @@ class CyberDashboard {
     this.setupCopyEmail();
     this.setupSimulatedTelemetry();
     this.setupInteractiveSimulators();
+    if (window.cyberAnimations && window.cyberAnimations.setupScrollReveal) {
+      window.cyberAnimations.setupScrollReveal();
+    }
   }
 
   startSystemClock() {
@@ -130,7 +133,7 @@ class CyberDashboard {
     const cyberContainer = document.getElementById('skillsCybersecurity');
     const toolsContainer = document.getElementById('skillsTools');
 
-    if (progContainer && CONFIG.skills.programming) {
+    if (progContainer && progContainer.children.length === 0 && CONFIG.skills.programming) {
       progContainer.innerHTML = CONFIG.skills.programming.map(s => `
         <div class="skill-item">
           <div class="skill-header">
@@ -141,7 +144,7 @@ class CyberDashboard {
       `).join('');
     }
 
-    if (netContainer && CONFIG.skills.networking) {
+    if (netContainer && netContainer.children.length === 0 && CONFIG.skills.networking) {
       netContainer.innerHTML = CONFIG.skills.networking.map(s => `
         <div class="skill-item">
           <div class="skill-header">
@@ -152,7 +155,7 @@ class CyberDashboard {
       `).join('');
     }
 
-    if (cyberContainer && CONFIG.skills.cybersecurity) {
+    if (cyberContainer && cyberContainer.children.length === 0 && CONFIG.skills.cybersecurity) {
       cyberContainer.innerHTML = CONFIG.skills.cybersecurity.map(s => `
         <div class="skill-item cyber-highlight">
           <div class="skill-header">
@@ -163,7 +166,7 @@ class CyberDashboard {
       `).join('');
     }
 
-    if (toolsContainer && CONFIG.skills.tools) {
+    if (toolsContainer && toolsContainer.children.length === 0 && CONFIG.skills.tools) {
       toolsContainer.innerHTML = CONFIG.skills.tools.map(s => `
         <div class="skill-item tool-pill">
           <i class="${s.icon}"></i>
@@ -178,31 +181,38 @@ class CyberDashboard {
 
   renderProjects() {
     const container = document.getElementById('projectsGrid');
-    if (!container || !CONFIG.projects) return;
+    if (!container) return;
 
-    container.innerHTML = CONFIG.projects.map((proj, idx) => `
-      <article class="project-card cyber-reveal">
-        <div class="project-card-header">
-          <span class="project-index">0${idx + 1} // SYS.PROJ</span>
-          <span class="cyber-tag">${proj.badge}</span>
-        </div>
-        <h3 class="project-title">${proj.title}</h3>
-        <p class="project-summary">${proj.summary}</p>
-        
-        <div class="project-tech-stack">
-          ${proj.technologies.map(t => `<span class="tech-badge">${t}</span>`).join('')}
-        </div>
+    if (container.children.length === 0 && CONFIG.projects) {
+      container.innerHTML = CONFIG.projects.map((proj, idx) => `
+        <article class="project-card cyber-reveal">
+          <div class="card-sheen"></div>
+          <div class="project-card-thumb">
+            <img src="${proj.schematic || 'assets/images/vlan-topology.svg'}" alt="${proj.title} Blueprint" class="project-thumb-img" loading="lazy">
+            <span class="project-thumb-overlay"><i class="fa-solid fa-diagram-project"></i> ARCH-BLUEPRINT</span>
+          </div>
+          <div class="project-card-header">
+            <span class="project-index">0${idx + 1} // SYS.PROJ</span>
+            <span class="cyber-tag">${proj.badge}</span>
+          </div>
+          <h3 class="project-title">${proj.title}</h3>
+          <p class="project-summary">${proj.summary}</p>
+          
+          <div class="project-tech-stack">
+            ${proj.technologies.map(t => `<span class="tech-badge">${t}</span>`).join('')}
+          </div>
 
-        <div class="project-card-actions">
-          <button class="cyber-btn cyber-btn-sm btn-project-detail" data-project-id="${proj.id}">
-            <i class="fa-solid fa-terminal"></i> Architecture Deep Dive
-          </button>
-          <a href="${proj.github}" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Source on GitHub">
-            <i class="fa-brands fa-github"></i> Source
-          </a>
-        </div>
-      </article>
-    `).join('');
+          <div class="project-card-actions">
+            <button class="cyber-btn cyber-btn-sm btn-project-detail" data-project-id="${proj.id}">
+              <i class="fa-solid fa-terminal"></i> Architecture Deep Dive
+            </button>
+            <a href="${proj.github}" target="_blank" rel="noopener noreferrer" class="cyber-btn cyber-btn-ghost cyber-btn-sm" title="View Source on GitHub">
+              <i class="fa-brands fa-github"></i> Source
+            </a>
+          </div>
+        </article>
+      `).join('');
+    }
 
     container.querySelectorAll('.btn-project-detail').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -210,73 +220,94 @@ class CyberDashboard {
         this.openProjectModal(id);
       });
     });
+
+    if (window.cyberAnimations && window.cyberAnimations.setup3DCardTilt) {
+      window.cyberAnimations.setup3DCardTilt();
+    }
   }
 
   renderSecurityLabs() {
     const container = document.getElementById('securityLabsGrid');
-    if (!container || !CONFIG.securityLabs) return;
+    if (!container) return;
 
-    container.innerHTML = CONFIG.securityLabs.map(lab => {
-      const isCompleted = lab.status === 'COMPLETED';
-      return `
-        <div class="lab-card cyber-reveal">
-          <div class="lab-header">
-            <span class="lab-category"><i class="fa-solid fa-flask"></i> ${lab.category}</span>
-            <span class="lab-status-badge ${isCompleted ? 'status-completed' : 'status-progress'}">
-              <span class="status-dot"></span> ${isCompleted ? 'COMPLETED' : 'IN RESEARCH'}
-            </span>
+    if (container.children.length === 0 && CONFIG.securityLabs) {
+      container.innerHTML = CONFIG.securityLabs.map(lab => {
+        const isCompleted = lab.status === 'COMPLETED';
+        return `
+          <div class="lab-card cyber-reveal">
+            <div class="card-sheen"></div>
+            <div class="lab-header">
+              <span class="lab-category"><i class="fa-solid fa-flask"></i> ${lab.category}</span>
+              <span class="lab-status-badge ${isCompleted ? 'status-completed' : 'status-progress'}">
+                <span class="status-dot"></span> ${isCompleted ? 'COMPLETED' : 'IN RESEARCH'}
+              </span>
+            </div>
+            <h4 class="lab-title">${lab.title}</h4>
+            <p class="lab-env"><strong>Environment:</strong> <code>${lab.environment}</code></p>
+            <p class="lab-obj">${lab.objective}</p>
+            <div class="lab-takeaway">
+              <span class="takeaway-label">Key Competency:</span>
+              <p>${lab.keyLearnings}</p>
+            </div>
           </div>
-          <h4 class="lab-title">${lab.title}</h4>
-          <p class="lab-env"><strong>Environment:</strong> <code>${lab.environment}</code></p>
-          <p class="lab-obj">${lab.objective}</p>
-          <div class="lab-takeaway">
-            <span class="takeaway-label">Key Competency:</span>
-            <p>${lab.keyLearnings}</p>
-          </div>
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
+
+    if (window.cyberAnimations && window.cyberAnimations.setup3DCardTilt) {
+      window.cyberAnimations.setup3DCardTilt();
+    }
   }
 
   renderCertifications() {
     const container = document.getElementById('certificationsGrid');
-    if (!container || !CONFIG.certifications) return;
+    if (!container) return;
 
-    container.innerHTML = CONFIG.certifications.map(cert => `
-      <div class="cert-card cyber-reveal">
-        <div class="cert-icon-wrapper">
-          <i class="fa-solid fa-certificate"></i>
+    if (container.children.length === 0 && CONFIG.certifications) {
+      container.innerHTML = CONFIG.certifications.map(cert => `
+        <div class="cert-card cyber-reveal">
+          <div class="card-sheen"></div>
+          <div class="cert-icon-wrapper">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <div class="cert-body">
+            <span class="cert-badge">${cert.status}</span>
+            <h4 class="cert-title">${cert.title}</h4>
+            <span class="cert-issuer">${cert.issuer}</span>
+            <p class="cert-desc">${cert.description}</p>
+            <a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer" class="cert-link">
+              Verify Curriculum / Institution <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
         </div>
-        <div class="cert-body">
-          <span class="cert-badge">${cert.status}</span>
-          <h4 class="cert-title">${cert.title}</h4>
-          <span class="cert-issuer">${cert.issuer}</span>
-          <p class="cert-desc">${cert.description}</p>
-          <a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer" class="cert-link">
-            Verify Curriculum / Institution <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-        </div>
-      </div>
-    `).join('');
+      `).join('');
+    }
+
+    if (window.cyberAnimations && window.cyberAnimations.setup3DCardTilt) {
+      window.cyberAnimations.setup3DCardTilt();
+    }
   }
 
   renderWriteups() {
     const container = document.getElementById('writeupsGrid');
-    if (!container || !CONFIG.writeups) return;
+    if (!container) return;
 
-    container.innerHTML = CONFIG.writeups.map(w => `
-      <article class="writeup-card cyber-reveal">
-        <div class="writeup-meta">
-          <span class="writeup-cat">${w.category}</span>
-          <span class="writeup-date">${w.date} • ${w.readTime}</span>
-        </div>
-        <h3 class="writeup-title">${w.title}</h3>
-        <p class="writeup-excerpt">${w.excerpt}</p>
-        <button class="cyber-link-btn btn-read-writeup" data-writeup-id="${w.id}">
-          Read Technical Note <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </article>
-    `).join('');
+    if (container.children.length === 0 && CONFIG.writeups) {
+      container.innerHTML = CONFIG.writeups.map(w => `
+        <article class="writeup-card cyber-reveal">
+          <div class="card-sheen"></div>
+          <div class="writeup-meta">
+            <span class="writeup-cat">${w.category}</span>
+            <span class="writeup-date">${w.date} • ${w.readTime}</span>
+          </div>
+          <h3 class="writeup-title">${w.title}</h3>
+          <p class="writeup-excerpt">${w.excerpt}</p>
+          <button class="cyber-link-btn btn-read-writeup" data-writeup-id="${w.id}">
+            Read Technical Note <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </article>
+      `).join('');
+    }
 
     container.querySelectorAll('.btn-read-writeup').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -284,6 +315,10 @@ class CyberDashboard {
         this.openWriteupModal(id);
       });
     });
+
+    if (window.cyberAnimations && window.cyberAnimations.setup3DCardTilt) {
+      window.cyberAnimations.setup3DCardTilt();
+    }
   }
 
   /* ================= MODAL LOGIC ================= */
@@ -328,6 +363,12 @@ class CyberDashboard {
             <span class="cyber-tag">${proj.badge}</span>
             <span class="term-muted">ID: ${proj.id}</span>
           </div>
+
+          ${proj.schematic ? `
+            <div class="modal-schematic-wrapper">
+              <img src="${proj.schematic}" alt="${proj.title} Architecture Blueprint" class="modal-schematic-img">
+            </div>
+          ` : ''}
 
           <h4 class="modal-section-heading">Executive Summary</h4>
           <p class="modal-text">${proj.description}</p>
@@ -465,6 +506,102 @@ class CyberDashboard {
   setupInteractiveSimulators() {
     this.setupPortScannerSimulator();
     this.setupVlanFlowSimulator();
+    this.setupRadarSweep();
+  }
+
+  setupRadarSweep() {
+    const canvas = document.getElementById('radarSweepCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let angle = 0;
+    const w = canvas.width;
+    const h = canvas.height;
+    const cx = w / 2;
+    const cy = h / 2;
+    const radius = w / 2 - 2;
+
+    const blips = [
+      { r: radius * 0.42, angle: 1.1, alpha: 0 },
+      { r: radius * 0.72, angle: 3.2, alpha: 0 },
+      { r: radius * 0.58, angle: 4.9, alpha: 0 }
+    ];
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+
+      // Radar background circle
+      ctx.fillStyle = '#020704';
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Range grid rings
+      ctx.strokeStyle = 'rgba(0, 255, 136, 0.22)';
+      ctx.lineWidth = 1;
+      [0.35, 0.7, 1.0].forEach(ratio => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * ratio, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // Axis crosshairs
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - radius);
+      ctx.lineTo(cx, cy + radius);
+      ctx.moveTo(cx - radius, cy);
+      ctx.lineTo(cx + radius, cy);
+      ctx.stroke();
+
+      // Sweeping radar phosphor beam
+      const beamArc = 0.55;
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+      grad.addColorStop(0, 'rgba(0, 255, 136, 0.35)');
+      grad.addColorStop(1, 'rgba(0, 255, 136, 0.04)');
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, angle - beamArc, angle);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Leading beam ray
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+      ctx.strokeStyle = 'rgba(0, 255, 136, 0.9)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Radar Blips
+      blips.forEach(blip => {
+        const diff = Math.abs((angle % (Math.PI * 2)) - blip.angle);
+        if (diff < 0.07) {
+          blip.alpha = 1.0;
+        } else {
+          blip.alpha = Math.max(0, blip.alpha - 0.016);
+        }
+
+        if (blip.alpha > 0.05) {
+          const bx = cx + Math.cos(blip.angle) * blip.r;
+          const by = cy + Math.sin(blip.angle) * blip.r;
+          ctx.beginPath();
+          ctx.arc(bx, by, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0, 255, 136, ${blip.alpha})`;
+          ctx.shadowColor = '#00FF88';
+          ctx.shadowBlur = 6;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      });
+
+      angle = (angle + 0.038) % (Math.PI * 2);
+      requestAnimationFrame(draw);
+    };
+
+    draw();
   }
 
   setupPortScannerSimulator() {

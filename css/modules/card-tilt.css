@@ -1,0 +1,45 @@
+/* ================= 3D CARD PERSPECTIVE TILT & SPECULAR SHEEN ================= */
+.project-card,
+.lab-card,
+.cert-card,
+.writeup-card,
+.sim-workbench-card,
+.skill-category-card,
+.hero-hud-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.1s ease-out, border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(circle 260px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 255, 136, 0.1) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 80%);
+}
+
+.project-card:hover .card-sheen,
+.lab-card:hover .card-sheen,
+.cert-card:hover .card-sheen,
+.writeup-card:hover .card-sheen,
+.sim-workbench-card:hover .card-sheen,
+.skill-category-card:hover .card-sheen,
+.hero-hud-card:hover .card-sheen {
+  opacity: 1;
+}
+
+.project-card:hover,
+.lab-card:hover,
+.cert-card:hover,
+.writeup-card:hover,
+.sim-workbench-card:hover,
+.skill-category-card:hover,
+.hero-hud-card:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 255, 136, 0.12);
+}

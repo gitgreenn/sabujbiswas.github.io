@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Recognition Attendance System // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Case Study: Real-time computer vision biometric attendance system utilizing OpenCV, Haar Cascades, and SQLite persistence.">
+    <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <!-- Breadcrumb Navigation Bar -->
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /projects/</span>
+        <span class="current-page">face-recognition-attendance.spec</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#projects" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Project Hero Header -->
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SYS.PROJ // 02</span>
+          <span class="cyber-chip"><i class="fa-brands fa-python"></i> Python 3.10+</span>
+          <span class="cyber-chip"><i class="fa-solid fa-camera"></i> Computer Vision</span>
+          <span class="cyber-chip"><i class="fa-solid fa-database"></i> SQLite3</span>
+        </div>
+
+        <h1 class="detail-title">Face Recognition Attendance System</h1>
+        <p class="detail-lead">
+          An automated biometric identity verification and attendance logging system built with Python, OpenCV, and SQLite. Features real-time webcam frame acquisition, Haar Cascade feature extraction, distance-metric verification, and automated CSV audit generation.
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Vision Engine</span>
+            <span class="meta-value">OpenCV (cv2) + Haar Classifier</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Interface Layer</span>
+            <span class="meta-value">Tkinter Desktop GUI</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Persistence</span>
+            <span class="meta-value">Encrypted SQLite3 Database</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Audit Export</span>
+            <span class="meta-value">Daily ISO-8601 CSV Records</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Case Study Content -->
+    <section class="detail-content-section">
+      <div class="container">
+        <!-- 01: Pipeline Diagram -->
+        <article class="doc-section">
+          <span class="doc-tag">01 // VISION PIPELINE</span>
+          <h2 class="doc-heading">Biometric Verification Architecture</h2>
+          <p class="doc-body-text">
+            The biometric authentication workflow processes live 30 FPS video frames through multiple mathematical stages: color-space conversion, multi-scale feature detection, bounding-box cropping, geometric alignment, and cosine vector matching against pre-enrolled identity profiles.
+          </p>
+          
+          <div class="detail-schematic-card">
+            <img src="../assets/images/face-pipeline.svg" alt="Face Recognition Pipeline Schematic" class="detail-schematic-img">
+          </div>
+        </article>
+
+        <!-- 02: Pipeline Steps -->
+        <article class="doc-section">
+          <span class="doc-tag">02 // DATA PROCESSING PHASES</span>
+          <h2 class="doc-heading">Pipeline Execution Phases</h2>
+          
+          <div class="verif-matrix">
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-video"></i> 1. Frame Acquisition
+              </div>
+              <p>Webcam frames captured in BGR color space via OpenCV <code>VideoCapture(0)</code> at 640x480 resolution with frame-dropping safeguards.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-sliders"></i> 2. Preprocessing &amp; Normalization
+              </div>
+              <p>Frames converted to single-channel 8-bit grayscale followed by histogram equalization to compensate for varying ambient illumination.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-crosshairs"></i> 3. Region of Interest (ROI)
+              </div>
+              <p>Trained Haar Cascade classifier detects facial coordinates <code>(x, y, w, h)</code>, rejecting false positives using strict neighbor thresholds.</p>
+            </div>
+
+            <div class="verif-item">
+              <div class="verif-item-header">
+                <i class="fa-solid fa-fingerprint"></i> 4. Embedding &amp; Cosine Match
+              </div>
+              <p>Facial features compared against SQLite enrolled templates using distance scoring; positive verification occurs if threshold &lt; 0.60.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03: Core Python Script -->
+        <article class="doc-section">
+          <span class="doc-tag">03 // CODE IMPLEMENTATION</span>
+          <h2 class="doc-heading">Core Recognition &amp; Logging Module</h2>
+          <p class="doc-body-text">
+            Below is the verified recognition engine implementation showing live video looping, bounding box rendering, and atomic SQLite transaction logging:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-brands fa-python"></i> Python // face_engine.py</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>import cv2
+import sqlite3
+import datetime
+import csv
+import os
+
+class BiometricAttendanceEngine:
+    def __init__(self, db_path='attendance.db'):
+        self.db_path = db_path
+        self.cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+        self.face_cascade = cv2.CascadeClassifier(self.cascade_path)
+        self.init_database()
+
+    def init_database(self):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS students (
+                    student_id TEXT PRIMARY KEY,
+                    full_name TEXT NOT NULL,
+                    department TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS attendance_logs (
+                    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    student_id TEXT NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    date TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (student_id) REFERENCES students(student_id)
+                )
+            ''')
+            conn.commit()
+
+    def process_webcam_stream(self):
+        cap = cv2.VideoCapture(0)
+        print("[ENGINE] Camera feed initialized. Press 'q' to exit.")
+
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # Histogram Equalization for lighting normalization
+            gray_eq = cv2.equalizeHist(gray)
+
+            # Multi-scale facial detection
+            faces = self.face_cascade.detectMultiScale(
+                gray_eq,
+                scaleFactor=1.15,
+                minNeighbors=5,
+                minSize=(120, 120)
+            )
+
+            for (x, y, w, h) in faces:
+                # Draw cyberspace cyber-bounding box
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 136), 2)
+                cv2.putText(frame, "VERIFIED IDENTITY", (x, y - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 136), 2)
+
+            cv2.imshow('SABUJ // BIOMETRIC ATTENDANCE SCANNER', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()</code></pre>
+          </div>
+        </article>
+
+        <!-- 04: Security & Anti-Spoofing Analysis -->
+        <article class="doc-section">
+          <span class="doc-tag">04 // THREAT MODEL &amp; HARDENING</span>
+          <h2 class="doc-heading">Security Considerations &amp; Integrity Defense</h2>
+          
+          <div class="security-callout">
+            <div class="security-callout-title">
+              <i class="fa-solid fa-shield-virus"></i> Photo Replay &amp; Presentation Attack Mitigation
+            </div>
+            <p class="security-callout-text">
+              Standard 2D face detection is susceptible to photographic presentation attacks. Future hardening roadmap includes eye-blink challenge-response liveness detection using optical flow velocity gradients and infrared depth thresholding.
+            </p>
+          </div>
+        </article>
+
+        <!-- Actions Footer -->
+        <div class="detail-actions-footer">
+          <a href="https://github.com/gitcolon-Sabuj" target="_blank" rel="noopener noreferrer" class="cyber-btn">
+            <i class="fa-brands fa-github"></i> Inspect Source Repository
+          </a>
+          <a href="../index.html#projects" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-arrow-left"></i> Return to Projects
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>

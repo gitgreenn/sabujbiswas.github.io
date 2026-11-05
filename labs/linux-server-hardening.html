@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 03: Linux Server Hardening & Privilege Auditing // Sabuj Biswas</title>
+  
+  <meta name="description" content="Technical Lab Report: Linux Server Hardening, SSH public-key enforcement, SUID binary auditing, and fail2ban brute-force protection.">
+    <!-- Content Security Policy & Origin Hardening -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2285%22>🛡️</text></svg>">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css?v=3.9.0">
+  <link rel="stylesheet" href="../css/terminal.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+      <!-- Instant Theme & FX Hydration (Sanitized) -->
+  <script>
+    try {
+      const validThemes = ['green', 'amber', 'cyan', 'red'];
+      const savedTheme = localStorage.getItem('cyber_theme');
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      const savedBlur = localStorage.getItem('cyber_rain_blur');
+      if (savedBlur === 'off') {
+        document.documentElement.classList.add('rain-sharp');
+      } else {
+        document.documentElement.classList.remove('rain-sharp');
+      }
+    } catch (e) {}
+  </script>
+</head>
+
+<body class="detail-page">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+  <div class="cyber-grid-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+
+  <header class="detail-nav-wrapper">
+    <div class="container detail-nav-content">
+      <div class="detail-breadcrumb">
+        <span class="term-prompt">root@cyberspace:~$</span>
+        <span>cd /labs/</span>
+        <span class="current-page">linux-server-hardening.lab</span>
+      </div>
+              <div class="detail-nav-actions">
+        <div class="theme-pills" style="display: inline-flex; gap: 6px; align-items: center; margin-right: 8px;" aria-label="Theme Switcher">
+          <button class="theme-btn" data-theme-set="green" title="Matrix Green" style="width: 14px; height: 14px; border-radius: 50%; background: #00ff88; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="amber" title="Amber CRT" style="width: 14px; height: 14px; border-radius: 50%; background: #ffb000; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="cyan" title="Ghost Cyan" style="width: 14px; height: 14px; border-radius: 50%; background: #00e5ff; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+          <button class="theme-btn" data-theme-set="red" title="Red Team" style="width: 14px; height: 14px; border-radius: 50%; background: #ff3366; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; padding: 0;"></button>
+        </div>
+        <button id="toggleRainBlur" class="cyber-btn cyber-btn-ghost cyber-btn-sm" style="font-size: 0.75rem; padding: 5px 10px; margin-right: 6px;" title="Toggle Ambient Matrix Rain Blur"><i class="fa-solid fa-eye-slash"></i> Blur: ON</button>
+        <a href="../index.html#labs" class="cyber-btn cyber-btn-ghost cyber-btn-sm">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+      </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail-hero-section">
+      <div class="container">
+        <div class="detail-badge-row">
+          <span class="cyber-tag">SEC.LAB // 03</span>
+          <span class="status-completed" style="padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.75rem;">
+            <i class="fa-solid fa-circle-check"></i> STATUS: COMPLETED
+          </span>
+          <span class="cyber-chip"><i class="fa-brands fa-linux"></i> Linux Administration</span>
+        </div>
+
+        <h1 class="detail-title">Linux Server Hardening &amp; User Privilege Auditing</h1>
+        <p class="detail-lead">
+          Systematic operational hardening of Linux servers. Enforced Ed25519 public-key SSH authentication, disabled remote root login, audited SUID/SGID executable binaries, and deployed <code>fail2ban</code> automated rate limiting.
+        </p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-item">
+            <span class="meta-label">Target OS</span>
+            <span class="meta-value">Ubuntu Server 22.04 LTS / Kali</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Authentication</span>
+            <span class="meta-value">SSH Ed25519 Key-Only (No Passwords)</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Intrusion Prevention</span>
+            <span class="meta-value">Fail2ban Automated Jails</span>
+          </div>
+          <div class="detail-meta-item">
+            <span class="meta-label">Audit Scope</span>
+            <span class="meta-value">SUID Executables &amp; Sudoers ACL</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-content-section">
+      <div class="container">
+        <article class="doc-section">
+          <span class="doc-tag">01 // SSH HARDENING</span>
+          <h2 class="doc-heading">SSH Daemon Hardening Configuration</h2>
+          <p class="doc-body-text">
+            Default OpenSSH configurations frequently permit password-based authentication and root logins, making servers vulnerable to credential stuffing attacks. Below is the hardened <code>/etc/ssh/sshd_config.d/99-hardened.conf</code>:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-file-code"></i> sshd_config.d/99-hardened.conf</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code># Disable Root Login via SSH
+PermitRootLogin no
+
+# Enforce Public Key Authentication and Disable Passwords
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+AuthenticationMethods publickey
+
+# Cryptographic Ciphers & Key Exchange (Strict Forward Secrecy)
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com
+
+# Anti-Brute-Force Connection Constraints
+MaxAuthTries 3
+MaxSessions 2
+ClientAliveInterval 300
+ClientAliveCountMax 2
+X11Forwarding no</code></pre>
+          </div>
+        </article>
+
+        <article class="doc-section">
+          <span class="doc-tag">02 // INTRUSION PREVENTION</span>
+          <h2 class="doc-heading">Fail2ban Jail Defense Implementation</h2>
+          <p class="doc-body-text">
+            Configured <code>fail2ban</code> to monitor <code>/var/log/auth.log</code> in real time. Any IP failing 3 authentication attempts within a 10-minute window is dynamically injected into an iptables <code>REJECT</code> rule for 24 hours.
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-shield"></i> /etc/fail2ban/jail.local</span>
+              <button class="btn-copy-code" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText); this.textContent='COPIED!'; setTimeout(()=>this.textContent='COPY', 2000)">COPY</button>
+            </div>
+            <pre><code>[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+findtime = 600
+bantime = 86400
+banaction = iptables-multiport</code></pre>
+          </div>
+        </article>
+
+        <article class="doc-section">
+          <span class="doc-tag">03 // PRIVILEGE AUDITING</span>
+          <h2 class="doc-heading">SUID Binary &amp; Sudoers Auditing</h2>
+          <p class="doc-body-text">
+            Audited system binaries for dangerous SUID bits (set-user-ID) that permit unprivileged users to execute commands with root permissions (e.g. GTFOBins vectors):
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang-badge"><i class="fa-solid fa-terminal"></i> SUID Search &amp; Remediation</span>
+            </div>
+            <pre><code># 1. Search for all files with SUID bit set
+find / -perm -4000 -type f 2>/dev/null
+
+# 2. Strip unnecessary SUID permissions from risky utilities
+chmod u-s /usr/bin/pkexec
+chmod u-s /usr/bin/chfn
+chmod u-s /usr/bin/chsh</code></pre>
+          </div>
+        </article>
+
+        <div class="detail-actions-footer">
+          <a href="../index.html#labs" class="cyber-btn">
+            <i class="fa-solid fa-flask"></i> Return to Security Labs
+          </a>
+          <a href="../writeups/linux-server-hardening.html" class="cyber-btn cyber-btn-ghost">
+            <i class="fa-solid fa-book-bookmark"></i> Read Technical Write-up
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <span class="footer-brand">SABUJ // CYBERSPACE OS v3.8</span>
+      <span class="footer-sub">&copy; 2026 Sabuj Biswas. All rights reserved. Zero tracking.</span>
+    </div>
+  </footer>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/cursor.js"></script>
+</body>
+</html>
